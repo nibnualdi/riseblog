@@ -5,6 +5,8 @@ import ArticleDetailView from '../views/ArticleDetailView.vue'
 import CreateArticle from '../views/CreateArticle.vue'
 import LoginView from '../views/LoginView.vue'
 import SignUpView from '../views/SignUpView.vue'
+import AboutView from '../views/AboutView.vue'
+import ContactView from '../views/ContactView.vue'
 
 const routes = [
   {
@@ -28,14 +30,14 @@ const routes = [
     component: CreateArticle
   },
   {
-    path: '/',
+    path: '/about',
     name: 'About',
-    component: HomeView
+    component: AboutView
   },
   {
-    path: '/',
+    path: '/contact',
     name: 'Contact',
-    component: HomeView
+    component: ContactView
   },
   // auth page
   {
@@ -51,7 +53,7 @@ const routes = [
   
   // articles category
   {
-    path: '/articles/:category',
+    path: '/articles/category/:category',
     name: 'categoryArticles',
     component: ArticleView
   },
@@ -60,6 +62,10 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+router.beforeEach((to, from) => {
+  window.scrollTo(0, 0)
 })
 
 export default router

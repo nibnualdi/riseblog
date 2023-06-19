@@ -13,14 +13,14 @@
         </div>
       </div>
       <Button widthAndHeight="w-[194px] h-[50.51px]" bgColor="bg-[#3652E1]" color="text-[#EFEFEF]" fontSize="text-[12px]"
-        text="Create Account" fontWeight="font-semibold" class="block lg:hidden" />
+        text="Create Account" fontWeight="font-semibold" class="block lg:hidden" @click="handleButtonLinkToSignUp" />
     </div>
     <div class="flex items-center gap-[50px] mb-[17px]">
-      <router-link :to="'/articles/All'">All</router-link>
-      <router-link :to="'/articles/Technology'">Technology</router-link>
-      <router-link :to="'/articles/Environment'">Environment</router-link>
-      <router-link :to="'/articles/Business'">Business</router-link>
-      <router-link :to="'/articles/Politics'">Politics</router-link>
+      <router-link :to="'/articles/category/All'">All</router-link>
+      <router-link :to="'/articles/category/Technology'">Technology</router-link>
+      <router-link :to="'/articles/category/Environment'">Environment</router-link>
+      <router-link :to="'/articles/category/Business'">Business</router-link>
+      <router-link :to="'/articles/category/Politics'">Politics</router-link>
     </div>
     <ArticleLeftCards />
   </section>
@@ -29,12 +29,22 @@
 <script>
 import ArticleLeftCards from "@/components/ArticleLeftCards.vue"
 import Button from "@/components/Button.vue"
+import { useRouter } from "vue-router";
 
 export default {
   name: "LeftCardSection",
   components: {
     ArticleLeftCards,
     Button
+  },
+  setup() {
+    const router = useRouter();
+
+    const handleButtonLinkToSignUp = () => {
+      router.push('/auth/signup')
+    }
+
+    return { handleButtonLinkToSignUp }
   }
 }
 </script>
@@ -49,4 +59,5 @@ div a.router-link-exact-active {
   font-weight: 600;
   font-size: 18px;
   color: #3652E1;
-}</style>
+}
+</style>

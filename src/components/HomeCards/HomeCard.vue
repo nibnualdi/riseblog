@@ -19,7 +19,7 @@
             </div>
           </div>
         </div>
-        <Button bgColor="bg-[#3652E1]" color="text-[#FFFFFF]" widthAndHeight="w-[69px] h-[30px]" fontSize="text-[10px]" text="Read More" />
+        <Button bgColor="bg-[#3652E1]" color="text-[#FFFFFF]" widthAndHeight="w-[69px] h-[30px]" fontSize="text-[10px]" text="Read More" @click="handleButtonLinkReadMore" />
       </div>
     </div>
   </div>
@@ -27,11 +27,21 @@
 
 <script>
 import Button from "@/components/Button.vue"
+import { useRouter } from "vue-router";
 
 export default {
   name: "HomeCard",
   components: {
     Button
+  },
+  setup() {
+    const router = useRouter();
+
+    const handleButtonLinkReadMore = () => {
+      router.push('/articles/1')
+    }
+
+    return { handleButtonLinkReadMore }
   }
 }
 </script>

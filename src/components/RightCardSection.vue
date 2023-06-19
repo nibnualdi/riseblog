@@ -1,6 +1,7 @@
 <template>
   <section class="pt-[179px] flex-col items-center gap-[26px] hidden lg:flex">
-    <Button widthAndHeight="w-[194px] h-[50.51px]" bgColor="bg-[#3652E1]" color="text-[#EFEFEF]" fontSize="text-[12px]" text="Create Account" fontWeight="font-semibold" />
+    <Button widthAndHeight="w-[194px] h-[50.51px]" bgColor="bg-[#3652E1]" color="text-[#EFEFEF]" fontSize="text-[12px]"
+      text="Create Account" fontWeight="font-semibold" @click="handleButtonLinkToSignUp" />
     <div class="w-[338px] h-[298px] bg-[#FFFFFF] rounded-[12px] p-[19px]">
       <p class="text-[13px] text-[#1C1C1C] font-semibold">Trending</p>
       <div class="flex flex-col gap-[12px] mt-[14px]">
@@ -24,6 +25,7 @@
 import Button from "@/components/Button.vue"
 import Card from "@/components/Card.vue"
 import RecomendedUser from "@/components/RecomendedUser.vue"
+import { useRouter } from "vue-router";
 
 export default {
   name: "RightCardSection",
@@ -31,6 +33,15 @@ export default {
     Button,
     Card,
     RecomendedUser
+  },
+  setup() {
+    const router = useRouter();
+
+    const handleButtonLinkToSignUp = () => {
+      router.push('/auth/signup')
+    }
+
+    return { handleButtonLinkToSignUp }
   }
 }
 </script>

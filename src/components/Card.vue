@@ -4,7 +4,8 @@
     <img src="@/assets/articles/img1.jpg" alt="img" :width="sizes.imgWidth" :height="sizes.imgHeight">
     <div class="flex flex-col justify-between">
       <div>
-        <h1 :class="`${sizes.titleWidth} ${trending || small ? 'text-[10px] font-medium' : 'text-[11px] font-semibold'}`" class="text-[#1C1C1C]">
+        <h1 :class="`${sizes.titleWidth} ${trending || small ? 'text-[10px] font-medium' : 'text-[11px] font-semibold'}`"
+          class="text-[#1C1C1C]">
           The overlooked benefits of real Christmas trees
         </h1>
         <p class="w-[223px] text-[10px] text-[#424242]" v-if="!small && !trending">
@@ -45,14 +46,15 @@
     <div class="flex flex-col justify-between items-end">
       <p class="text-[10px] text-[#42424263] opacity-[89%]" v-if="!small && !trending">12h ago</p>
       <Button text="Read More" widthAndHeight="w-[76px] h-[26px]" bgColor="bg-[#3652E1]" fontSize="text-[8px]"
-        color="text-[#EFEFEF]" v-if="!small && !trending" />
+        color="text-[#EFEFEF]" v-if="!small && !trending" @click="handleButtonLinkReadMore" />
     </div>
   </div>
 </template>
 
 <script>
 import Button from "@/components/Button.vue"
-import { onMounted, onUpdated, ref } from "vue";
+import { onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
 
 export default {
   name: "Card",
@@ -61,6 +63,8 @@ export default {
   },
   props: ["small", "trending"],
   setup({ small, trending }) {
+    const router = useRouter();
+
     const TOPICS = [
       { name: 'Environment', bgColor: 'bg-[#00B33D]' },
       { name: 'Asia', bgColor: 'bg-[#1C1C1C]' }
@@ -100,7 +104,11 @@ export default {
       }
     })
 
-    return { sizes, padding, TOPICS }
+    const handleButtonLinkReadMore = () => {
+      router.push('/articles/1')
+    }
+
+    return { sizes, padding, TOPICS, handleButtonLinkReadMore }
   },
 }
 </script>
