@@ -15,12 +15,8 @@
       <Button widthAndHeight="w-[194px] h-[50.51px]" bgColor="bg-[#3652E1]" color="text-[#EFEFEF]" fontSize="text-[12px]"
         text="Create Account" fontWeight="font-semibold" class="block lg:hidden" @click="handleButtonLinkToSignUp" />
     </div>
-    <div class="flex items-center gap-[50px] mb-[17px]">
-      <router-link :to="'/articles/category/All'">All</router-link>
-      <router-link :to="'/articles/category/Technology'">Technology</router-link>
-      <router-link :to="'/articles/category/Environment'">Environment</router-link>
-      <router-link :to="'/articles/category/Business'">Business</router-link>
-      <router-link :to="'/articles/category/Politics'">Politics</router-link>
+    <div class="flex items-center gap-[50px] mb-[17px] capitalize">
+      <router-link v-for="tag in tags" :to="`/articles/category/${tag}`">{{ tag }}</router-link>
     </div>
     <ArticleLeftCards />
   </section>
@@ -29,7 +25,9 @@
 <script>
 import ArticleLeftCards from "@/components/ArticleLeftCards.vue"
 import Button from "@/components/Button.vue"
-import { useRouter } from "vue-router";
+import { computed, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { useStore } from "vuex";
 
 export default {
   name: "LeftCardSection",
@@ -39,12 +37,21 @@ export default {
   },
   setup() {
     const router = useRouter();
+    const store = useStore();
+    const route = useRoute();
+    
+    watch([route], ()=>{
+      store.dispatch("getPostByTag", route.params.category)
+      console.log(route.params.category)
+    })
+
+    const tags = computed(()=> store.state.tag)
 
     const handleButtonLinkToSignUp = () => {
       router.push('/auth/signup')
     }
 
-    return { handleButtonLinkToSignUp }
+    return { handleButtonLinkToSignUp, tags }
   }
 }
 </script>

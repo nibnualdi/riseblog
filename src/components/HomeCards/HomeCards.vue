@@ -26,7 +26,7 @@ export default {
 
     // get posts from api
     onMounted(()=>{
-      store.dispatch("updatePost")
+      store.dispatch("getAllPost")
     })
 
     onMounted(() => {
