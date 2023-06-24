@@ -1,15 +1,17 @@
 <template>
   <div class="flex gap-[31px] max-w-[700px] w-[50%] overflow-auto home-cards" @click="handleScroll">
-    <div v-for="(newClass) in newClasses" :id="newClass" :class="{ show: currentElement === newClass }"
+    <div v-for="(post) in posts" :id="post.id" :class="{ show: currentElement === post.id }"
       class="home-card-container text-[10px]">
-      <HomeCard />
+      <HomeCard :title="post.text" :desc="post.text" :image="post.image" :date="getStringDateFormat(post.publishDate)" :likes="post.likes" />
     </div>
   </div>
 </template>
 
 <script>
 import HomeCard from "@/components/HomeCards/HomeCard.vue"
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
+import { useStore } from "vuex";
+import { getStringDateFormat } from "@/utils/getStringDateFormat"
 
 export default {
   name: "HomeCards",
@@ -17,8 +19,15 @@ export default {
     HomeCard
   },
   setup() {
-    const newClasses = ref(["1", "2", "3", "4"])
     const currentElement = ref("")
+
+    const store = useStore()
+    const posts = computed(()=> store.state.post)
+
+    // get posts from api
+    onMounted(()=>{
+      store.dispatch("updatePost")
+    })
 
     onMounted(() => {
       const homeCard = document.querySelectorAll(".home-card-container")
@@ -39,7 +48,7 @@ export default {
       })
     })
 
-    return { newClasses, currentElement }
+    return { currentElement, posts, getStringDateFormat }
   }
 }
 </script>
