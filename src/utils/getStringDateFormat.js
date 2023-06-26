@@ -37,4 +37,13 @@ const getStringDayFormat = (isoString) => {
   return `${year} ${monthNames[month+1]} ${dayNames[day]}`
 };
 
-export { getStringDateFormat, getStringDayFormat };
+const getStringJustYearFormat = (isoString) => {
+
+  const date = new Date(isoString);
+
+  const year = date.getFullYear();
+
+  return `${year}`
+};
+
+export { getStringDateFormat, getStringDayFormat, getStringJustYearFormat };

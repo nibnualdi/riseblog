@@ -6,7 +6,7 @@
       <p class="text-[13px] text-[#1C1C1C] font-semibold">Trending</p>
       <div class="flex flex-col gap-[12px] mt-[14px]">
         <Card trending="true" v-for="trendingPost in trendingPosts" :image="trendingPost.image" :title="trendingPost.text"
-          :tags="trendingPost.tags" :owner="trendingPost.owner" :date="getStringDateFormat(trendingPost.publishDate)" />
+          :tags="trendingPost.tags.slice(0,2)" :owner="trendingPost.owner" :date="getStringJustYearFormat(trendingPost.publishDate)" />
       </div>
     </div>
     <div class="w-[338px] h-[246px] bg-[#FFFFFF] rounded-[12px] p-[19px]">
@@ -23,7 +23,7 @@
 import Button from "@/components/Button.vue"
 import Card from "@/components/Card.vue"
 import RecomendedUser from "@/components/RecomendedUser.vue"
-import { getStringDateFormat } from "@/utils/getStringDateFormat";
+import { getStringJustYearFormat } from "@/utils/getStringDateFormat";
 import { computed } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
@@ -50,7 +50,7 @@ export default {
       router.push('/auth/signup')
     }
 
-    return { handleButtonLinkToSignUp, trendingPosts, getStringDateFormat }
+    return { handleButtonLinkToSignUp, trendingPosts, getStringJustYearFormat }
   }
 }
 </script>

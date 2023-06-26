@@ -1,7 +1,7 @@
 <template>
   <div :class="`${sizes.containerWidth} ${sizes.containerHeight} ${padding.container}`"
     class="flex gap-[14px] bg-white rounded-[12px]">
-    <img :src="image" alt="img" :width="sizes.imgWidth" :height="sizes.imgHeight"
+    <img :src="image" alt="img" :width="sizes.imgWidth" :height="sizes.imgHeight" class="object-cover"
       :class="!small && !trending && `rounded-[12px]`">
     <div class="flex flex-col justify-between">
       <div>
@@ -16,11 +16,11 @@
       <div :class="small || trending ? 'w-full flex justify-between' : ''">
         <div class="flex items-center mb-[7px]">
           <img :src="owner.picture" alt="img" width="15" height="15" class="rounded-[15px] mr-[3px]">
-          <p class="text-[10px] text-[#1C1C1C] mr-[5px]">{{ ownerName }}</p>
+          <p class="text-[10px] text-[#1C1C1C] mr-[5px] leading-[10px]">{{ ownerName }}</p>
           <img src="@/assets/icons/star.svg" alt="star" width="7.88" height="7.93" v-if="!trending">
         </div>
         <div :class="small || trending ? 'w-auto' : 'w-[259px]'" class="flex justify-between">
-          <div class="flex gap-[7px]">
+          <div class="flex gap-[7px] items-center">
             <p class="h-[16px] bg-[#00B33D] text-[#EFEFEF] text-[8px] rounded-[15px] flex justify-center items-center px-[12px]"
               v-for="tag in tags" v-if="!small">
               {{ tag }}
