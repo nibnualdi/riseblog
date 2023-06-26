@@ -15,7 +15,7 @@
       </div>
       <div :class="small || trending ? 'w-full flex justify-between' : ''">
         <div class="flex items-center mb-[7px]">
-          <img src="@/assets/articles/profile.jpg" alt="img" width="15" height="15" class="rounded-[15px] mr-[3px]">
+          <img :src="owner.picture" alt="img" width="15" height="15" class="rounded-[15px] mr-[3px]">
           <p class="text-[10px] text-[#1C1C1C] mr-[5px]">{{ ownerName }}</p>
           <img src="@/assets/icons/star.svg" alt="star" width="7.88" height="7.93" v-if="!trending">
         </div>
