@@ -25,7 +25,7 @@
 <script>
 import ArticleLeftCards from "@/components/ArticleLeftCards.vue"
 import Button from "@/components/Button.vue"
-import { computed, watch } from "vue";
+import { computed, watch, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
 
@@ -40,6 +40,10 @@ export default {
     const store = useStore();
     const route = useRoute();
     
+    onMounted(()=>{
+      store.dispatch("getPostByTag", route.params.category)
+    })
+
     watch([route], ()=>{
       store.dispatch("getPostByTag", route.params.category)
       console.log(route.params.category)

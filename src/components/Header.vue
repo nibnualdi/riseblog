@@ -6,7 +6,7 @@
     </div>
     <nav class="flex gap-[28px]">
       <router-link :to="{ name: 'Home' }">Home</router-link>
-      <router-link :to="{ name: 'Articles' }">Articles</router-link>
+      <router-link to="/articles/category/all">Articles</router-link>
       <router-link :to="{ name: 'About' }">About</router-link>
       <router-link :to="{ name: 'Contact' }">Contact</router-link>
       <img :src="searchIcon" alt="search">

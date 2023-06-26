@@ -15,7 +15,7 @@ const routes = [
     component: HomeView
   },
   {
-    path: '/articles',
+    path: '/articles/category/:category',
     name: 'Articles',
     component: ArticleView
   },
