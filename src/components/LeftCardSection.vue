@@ -64,6 +64,7 @@ export default {
 
 
     onMounted(()=>{
+      store.commit("clearPost")
       store.dispatch("getPostByTag", { category: route.params.category })
     })
 

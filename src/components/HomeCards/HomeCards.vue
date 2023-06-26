@@ -26,6 +26,7 @@ export default {
 
     // get posts from api
     onMounted(()=>{
+      store.commit("clearPost")
       store.dispatch("getAllPost")
     })
 
