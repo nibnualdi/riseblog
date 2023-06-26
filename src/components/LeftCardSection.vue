@@ -52,8 +52,6 @@ export default {
         const isLimit = postLength === totalPost;
 
         if(entries[0].isIntersecting && !isLimit) {
-          console.log(postLength)
-          console.log(isLimit, "isLimit")
           page.value += 1
           store.dispatch("getPostByTag", { category: route.params.category, page: page.value })
         }
@@ -71,7 +69,6 @@ export default {
     watch([route], ()=>{
       store.commit("clearPost")
       store.dispatch("getPostByTag", { category: route.params.category })
-      console.log(route.params.category)
     })
 
     const tags = computed(()=> store.state.tag)
