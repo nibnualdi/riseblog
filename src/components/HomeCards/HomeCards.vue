@@ -2,7 +2,8 @@
   <div class="flex gap-[31px] max-w-[700px] w-[50%] overflow-auto home-cards" @click="handleScroll">
     <div v-for="(post) in posts" :id="post.id" :class="{ show: currentElement === post.id }"
       class="home-card-container text-[10px]">
-      <HomeCard :title="post.text" :desc="post.text" :image="post.image" :date="getStringDateFormat(post.publishDate)" :likes="post.likes" />
+      <HomeCard :title="post.text" :desc="post.text" :image="post.image" :date="getStringDateFormat(post.publishDate)"
+        :likes="post.likes" :idPost="post.id" />
     </div>
   </div>
 </template>
@@ -22,10 +23,10 @@ export default {
     const currentElement = ref("")
 
     const store = useStore()
-    const posts = computed(()=> store.state.post)
+    const posts = computed(() => store.state.post)
 
     // get posts from api
-    onMounted(()=>{
+    onMounted(() => {
       store.commit("clearPost")
       store.dispatch("getAllPost")
     })

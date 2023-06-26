@@ -32,7 +32,7 @@ import { useRouter } from "vue-router";
 
 export default {
   name: "HomeCard",
-  props: ["title", "desc", "image", "date", "likes"],
+  props: ["title", "desc", "image", "date", "likes", "idPost"],
   components: {
     Button
   },
@@ -41,7 +41,7 @@ export default {
     const titleComputed = computed(()=> props.title.substring(0, 20))
 
     const handleButtonLinkReadMore = () => {
-      router.push('/articles/1')
+      router.push(`/articles/${props.idPost}`)
     }
 
     return { handleButtonLinkReadMore, titleComputed }
