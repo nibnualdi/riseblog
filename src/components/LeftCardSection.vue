@@ -5,12 +5,12 @@
         <h1
           class="bg-clip-text text-transparent bg-gradient-to-r from-[#3652E1] to-[#8057F5] text-[46px] font-bold mb-[5px]">
           For you</h1>
-        <div class="relative mb-[17px]">
+        <!-- <div class="relative mb-[17px]">
           <input type="text" name="search" placeholder="Search article..."
             class="w-[220px] h-[32px] bg-[#E8E8E8] outline-[#8E8E8E] rounded-[20px] pl-[31px] text-[12px] text-[#8E8E8E]">
           <img src="@/assets/icons/search.svg" alt="search" width="11" height="11"
             class="absolute top-[11px] left-[10px]">
-        </div>
+        </div> -->
       </div>
       <Button widthAndHeight="w-[194px] h-[50.51px]" bgColor="bg-[#3652E1]" color="text-[#EFEFEF]" fontSize="text-[12px]"
         text="Create Account" fontWeight="font-semibold" class="block lg:hidden" @click="handleButtonLinkToSignUp" />
