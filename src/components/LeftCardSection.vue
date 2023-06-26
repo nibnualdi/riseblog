@@ -19,13 +19,14 @@
       <router-link v-for="tag in tags" :to="`/articles/category/${tag}`">{{ tag }}</router-link>
     </div>
     <ArticleLeftCards />
+    <span id="listBottomSide"></span>
   </section>
 </template>
 
 <script>
 import ArticleLeftCards from "@/components/ArticleLeftCards.vue"
 import Button from "@/components/Button.vue"
-import { computed, watch, onMounted } from "vue";
+import { computed, watch, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
 
@@ -39,13 +40,36 @@ export default {
     const router = useRouter();
     const store = useStore();
     const route = useRoute();
-    
+    let page = ref(0)
+
+    const totalPost = computed(()=> store.state.totalPost)
+
     onMounted(()=>{
-      store.dispatch("getPostByTag", route.params.category)
+      const listBottomSide = document.querySelector("#listBottomSide");
+  
+      const obsever = new IntersectionObserver((entries)=>{
+        const postLength = store.state.post.length;
+        const isLimit = postLength === totalPost;
+
+        if(entries[0].isIntersecting && !isLimit) {
+          console.log(postLength)
+          console.log(isLimit, "isLimit")
+          page.value += 1
+          store.dispatch("getPostByTag", { category: route.params.category, page: page.value })
+        }
+      })
+  
+      obsever.observe(listBottomSide)
+    })
+
+
+    onMounted(()=>{
+      store.dispatch("getPostByTag", { category: route.params.category })
     })
 
     watch([route], ()=>{
-      store.dispatch("getPostByTag", route.params.category)
+      store.commit("clearPost")
+      store.dispatch("getPostByTag", { category: route.params.category })
       console.log(route.params.category)
     })
 

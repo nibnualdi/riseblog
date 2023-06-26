@@ -3,7 +3,7 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-    post: null,
+    post: [],
     totalPost: 0,
     tag: ["all", "technology", "environment", "business", "politics"]
   },
@@ -11,29 +11,34 @@ export default createStore({
   // },
   mutations: {
     updatePost(state, payload) {
-      state.post = payload
+      payload.forEach(element => {
+        state.post.push(element)
+      });
+    },
+    clearPost(state) {
+      state.post = []
     },
     updateTotalPost(state, payload) {
       state.totalPost = payload
     },
   },
   actions: {
-    async getAllPost(context) {
-      const post = await axiosInstance.get("/post")
+    async getAllPost(context, { page=0 } = {}) {
+      const post = await axiosInstance.get(`/post?page=${page}`)
       context.commit("updatePost", post.data.data)
       context.commit("updateTotalPost", post.data.total)
       console.log("post is updated : ", context.state.post, context.state.totalPost)
     },
-    async getPostByTag(context, payload) {
-      if (payload === "all") {
-        const post = await axiosInstance.get("/post")
+    async getPostByTag(context, { category, page=0 }) {
+      if (category === "all") {
+        const post = await axiosInstance.get(`/post?page=${page}`)
         context.commit("updatePost", post.data.data)
         context.commit("updateTotalPost", post.data.total)
         console.log("post is updated : ", context.state.post, context.state.totalPost)
         return post
       }
 
-      const post = await axiosInstance.get(`/tag/${payload}/post`)
+      const post = await axiosInstance.get(`/tag/${category}/post?page=${page}`)
       context.commit("updatePost", post.data.data)
       context.commit("updateTotalPost", post.data.total)
       console.log("post is updated : ", context.state.post, context.state.totalPost)

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-[12px] mb-[142px]">
+  <div class="flex flex-col gap-[12px]">
     <Card v-for="post in posts" :image="post.image" :title="post.text" :desc="post.text" :owner="post.owner"
       :tags="post.tags" :date="getStringDateFormat(post.publishDate)" :likes="post.likes" :idPost="post.id" />
   </div>
