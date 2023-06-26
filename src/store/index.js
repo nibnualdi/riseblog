@@ -5,7 +5,8 @@ export default createStore({
   state: {
     post: [],
     totalPost: 0,
-    tag: ["all", "technology", "environment", "business", "politics"]
+    tag: ["all", "technology", "environment", "business", "politics"],
+    singlePost: null
   },
   // getters: {
   // },
@@ -20,6 +21,9 @@ export default createStore({
     },
     updateTotalPost(state, payload) {
       state.totalPost = payload
+    },
+    updateSinglePost(state, payload) {
+      state.singlePost = payload
     },
   },
   actions: {
@@ -42,6 +46,11 @@ export default createStore({
       context.commit("updatePost", post.data.data)
       context.commit("updateTotalPost", post.data.total)
       console.log("post is updated : ", context.state.post, context.state.totalPost)
+    },
+    async getASinglePost(context, payload) {
+      const post = await axiosInstance.get(`/post/${payload}`)
+      context.commit("updateSinglePost", post.data)
+      console.log("single post is updated : ", context.state.singlePost)
     },
   },
   // modules: {
