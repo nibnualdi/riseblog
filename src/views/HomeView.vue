@@ -1,7 +1,9 @@
 <template>
-  <Banner />
-  <BestArticles />
-  <Subscribe />
+  <div>
+    <Banner />
+    <BestArticles />
+    <Subscribe />
+  </div>
 </template>
 
 <script>

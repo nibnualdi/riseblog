@@ -1,5 +1,7 @@
 <template>
-  <AuthCard name="Sign Up" />
+  <div>
+    <AuthCard name="Sign Up" />
+  </div>
 </template>
 
 <script>

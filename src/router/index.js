@@ -13,50 +13,42 @@ const routes = [
     path: '/',
     name: 'Home',
     component: HomeView,
-    meta: { transition: 'slide-left' },
   },
   {
     path: '/articles/category/:category',
     name: 'Articles',
     component: ArticleView,
-    meta: { transition: 'slide-left' },
   },
   {
     path: '/articles/:id',
     name: 'ArticleDetail',
     component: ArticleDetailView,
-    meta: { transition: 'slide-left' },
   },
   {
     path: '/articles/create',
     name: 'CreateArticle',
     component: CreateArticle,
-    meta: { transition: 'slide-left' },
   },
   {
     path: '/about',
     name: 'About',
     component: AboutView,
-    meta: { transition: 'slide-left' },
   },
   {
     path: '/contact',
     name: 'Contact',
     component: ContactView,
-    meta: { transition: 'slide-left' },
   },
   // auth page
   {
     path: '/auth/signup',
     name: 'SignUp',
     component: SignUpView,
-    meta: { transition: 'slide-left' },
   },
   {
     path: '/auth/login',
     name: 'Login',
     component: LoginView,
-    meta: { transition: 'slide-left' },
   },
   
   // articles category
@@ -64,7 +56,6 @@ const routes = [
     path: '/articles/category/:category',
     name: 'categoryArticles',
     component: ArticleView,
-    meta: { transition: 'slide-left' },
   },
 ]
 
