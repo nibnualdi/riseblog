@@ -55,10 +55,6 @@ export default {
     
     const posts = computed(()=>store.state.post.slice(0,3))
 
-    console.log(posts, "posts")
-
-    watch(posts, ()=>console.log(posts, "posts"))
-    
 
     return { singlePost, titleComputed, posts }
   }
