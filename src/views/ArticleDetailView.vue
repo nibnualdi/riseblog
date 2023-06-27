@@ -45,6 +45,10 @@ export default {
       store.dispatch("getASinglePost", route.params.id)
       store.dispatch("getAllPost")
     })
+    
+    watch(route, ()=>{
+      store.dispatch("getASinglePost", route.params.id)
+    })
 
     const singlePost = computed(()=>store.state.singlePost)
     const titleComputed = computed(() => singlePost.value?.text?.substring(0, 20))

@@ -1,12 +1,12 @@
 <template>
   <div :class="`${sizes.containerWidth} ${sizes.containerHeight} ${padding.container}`"
     class="flex gap-[14px] bg-white rounded-[12px]">
-    <img :src="image" alt="img" :width="sizes.imgWidth" :height="sizes.imgHeight" class="object-cover"
-      :class="!small && !trending && `rounded-[12px]`">
+    <img :src="image" alt="img" :width="sizes.imgWidth" :height="sizes.imgHeight" class="object-cover hover:cursor-pointer"
+      :class="!small && !trending && `rounded-[12px]`" @click="handleButtonLinkReadMore">
     <div class="flex flex-col justify-between">
       <div>
         <h1 :class="`${sizes.titleWidth} ${trending || small ? 'text-[10px] font-medium' : 'text-[11px] font-semibold'}`"
-          class="text-[#1C1C1C]">
+          class="text-[#1C1C1C] hover:cursor-pointer" @click="handleButtonLinkReadMore">
           {{ titleComputed }}
         </h1>
         <p class="w-[223px] text-[10px] text-[#424242]" v-if="!small && !trending">
@@ -21,12 +21,12 @@
         </div>
         <div :class="small || trending ? 'w-auto' : 'w-[259px]'" class="flex justify-between">
           <div class="flex gap-[7px] items-center">
-            <p class="h-[16px] bg-[#00B33D] text-[#EFEFEF] text-[8px] rounded-[15px] flex justify-center items-center px-[12px]"
-              v-for="tag in tags" v-if="!small">
+            <p class="h-[16px] bg-[#00B33D] text-[#EFEFEF] text-[8px] rounded-[15px] flex justify-center items-center px-[12px] hover:cursor-pointer"
+              v-for="tag in tags" v-if="!small" @click="handleButtonLinkToOtherCategory(tag)">
               {{ tag }}
             </p>
-            <p class="h-[16px] bg-[#00B33D] text-[#EFEFEF] text-[8px] rounded-[15px] flex justify-center items-center px-[12px] mr-[5px]"
-              v-if="small">
+            <p class="h-[16px] bg-[#00B33D] text-[#EFEFEF] text-[8px] rounded-[15px] flex justify-center items-center px-[12px] mr-[5px] hover:cursor-pointer"
+              v-if="small" @click="handleButtonLinkToOtherCategory(tags[tags.length - 1])">
               {{ tags[tags.length - 1] }}
             </p>
             <p class="text-[10px] text-[#42424263] opacity-[89%]" v-if="trending">{{ date }}</p>
@@ -112,8 +112,12 @@ export default {
     const handleButtonLinkReadMore = () => {
       router.push(`/articles/${idPost}`)
     }
+    
+    const handleButtonLinkToOtherCategory = (tag) => {
+      router.push(`/articles/category/${tag}`)
+    }
 
-    return { sizes, padding, TOPICS, handleButtonLinkReadMore, titleComputed, ownerName }
+    return { sizes, padding, TOPICS, handleButtonLinkReadMore, titleComputed, ownerName, handleButtonLinkToOtherCategory }
   },
 }
 </script>

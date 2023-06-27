@@ -6,7 +6,7 @@
       <p class="text-[13px] text-[#1C1C1C] font-semibold">Trending</p>
       <div class="flex flex-col gap-[12px] mt-[14px]">
         <Card trending="true" v-for="trendingPost in trendingPosts" :image="trendingPost.image" :title="trendingPost.text"
-          :tags="trendingPost.tags.slice(0,2)" :owner="trendingPost.owner" :date="getStringJustYearFormat(trendingPost.publishDate)" />
+          :tags="trendingPost.tags.slice(0,2)" :owner="trendingPost.owner" :date="getStringJustYearFormat(trendingPost.publishDate)" :idPost="trendingPost.id" />
       </div>
     </div>
     <div class="w-[338px] h-[246px] bg-[#FFFFFF] rounded-[12px] p-[19px]">

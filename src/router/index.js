@@ -12,50 +12,59 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: HomeView
+    component: HomeView,
+    meta: { transition: 'slide-left' },
   },
   {
     path: '/articles/category/:category',
     name: 'Articles',
-    component: ArticleView
+    component: ArticleView,
+    meta: { transition: 'slide-left' },
   },
   {
     path: '/articles/:id',
     name: 'ArticleDetail',
-    component: ArticleDetailView
+    component: ArticleDetailView,
+    meta: { transition: 'slide-left' },
   },
   {
     path: '/articles/create',
     name: 'CreateArticle',
-    component: CreateArticle
+    component: CreateArticle,
+    meta: { transition: 'slide-left' },
   },
   {
     path: '/about',
     name: 'About',
-    component: AboutView
+    component: AboutView,
+    meta: { transition: 'slide-left' },
   },
   {
     path: '/contact',
     name: 'Contact',
-    component: ContactView
+    component: ContactView,
+    meta: { transition: 'slide-left' },
   },
   // auth page
   {
     path: '/auth/signup',
     name: 'SignUp',
-    component: SignUpView
+    component: SignUpView,
+    meta: { transition: 'slide-left' },
   },
   {
     path: '/auth/login',
     name: 'Login',
-    component: LoginView
+    component: LoginView,
+    meta: { transition: 'slide-left' },
   },
   
   // articles category
   {
     path: '/articles/category/:category',
     name: 'categoryArticles',
-    component: ArticleView
+    component: ArticleView,
+    meta: { transition: 'slide-left' },
   },
 ]
 
