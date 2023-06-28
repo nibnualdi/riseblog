@@ -1,5 +1,10 @@
 <template>
   <div class="flex gap-[31px] max-w-[700px] w-[50%] overflow-auto home-cards" @click="handleScroll">
+    <Skeleton v-if="isLoading" />
+    <Skeleton v-if="isLoading" />
+    <Skeleton v-if="isLoading" />
+    <Skeleton v-if="isLoading" />
+    <Skeleton v-if="isLoading" />
     <div v-for="(post) in posts" :id="post.id" :class="{ show: currentElement === post.id }"
       class="home-card-container text-[10px]">
       <HomeCard :title="post.text" :desc="post.text" :image="post.image" :date="getStringDateFormat(post.publishDate)"
@@ -10,6 +15,7 @@
 
 <script>
 import HomeCard from "@/components/HomeCards/HomeCard.vue"
+import Skeleton from "@/components/Loading/Skeleton.vue"
 import { computed, onMounted, ref, watch } from "vue";
 import { useStore } from "vuex";
 import { getStringDateFormat } from "@/utils/getStringDateFormat"
@@ -17,13 +23,15 @@ import { getStringDateFormat } from "@/utils/getStringDateFormat"
 export default {
   name: "HomeCards",
   components: {
-    HomeCard
+    HomeCard,
+    Skeleton
   },
   setup() {
     const currentElement = ref("")
 
     const store = useStore()
-    const posts = computed(() => store.state.post)
+    const posts = computed(() => store.state.post.posts)
+    const isLoading = computed(() => store.state.post.isLoading)
 
     // get posts from api
     onMounted(() => {
@@ -50,7 +58,7 @@ export default {
       })
     })
 
-    return { currentElement, posts, getStringDateFormat }
+    return { currentElement, posts, getStringDateFormat, isLoading }
   }
 }
 </script>

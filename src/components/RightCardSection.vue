@@ -5,8 +5,13 @@
     <div class="w-[338px] h-[298px] bg-[#FFFFFF] rounded-[12px] p-[19px]">
       <p class="text-[13px] text-[#1C1C1C] font-semibold">Trending</p>
       <div class="flex flex-col gap-[12px] mt-[14px]">
+        <Skeleton trending="true" v-if="isLoading" />
+        <Skeleton trending="true" v-if="isLoading" />
+        <Skeleton trending="true" v-if="isLoading" />
+        <Skeleton trending="true" v-if="isLoading" />
         <Card trending="true" v-for="trendingPost in trendingPosts" :image="trendingPost.image" :title="trendingPost.text"
-          :tags="trendingPost.tags.slice(0,2)" :owner="trendingPost.owner" :date="getStringJustYearFormat(trendingPost.publishDate)" :idPost="trendingPost.id" />
+          :tags="trendingPost.tags.slice(0, 2)" :owner="trendingPost.owner"
+          :date="getStringJustYearFormat(trendingPost.publishDate)" :idPost="trendingPost.id" />
       </div>
     </div>
     <div class="w-[338px] h-[246px] bg-[#FFFFFF] rounded-[12px] p-[19px]">
@@ -23,6 +28,7 @@
 import Button from "@/components/Button.vue"
 import Card from "@/components/Card.vue"
 import RecomendedUser from "@/components/RecomendedUser.vue"
+import Skeleton from "@/components/Loading/Skeleton.vue"
 import { getStringJustYearFormat } from "@/utils/getStringDateFormat";
 import { computed } from "vue";
 import { useRouter } from "vue-router";
@@ -33,24 +39,27 @@ export default {
   components: {
     Button,
     Card,
-    RecomendedUser
+    RecomendedUser,
+    Skeleton
   },
   setup() {
     const router = useRouter();
     const store = useStore();
     const trendingPosts = computed(() => {
-      const post = [...store.state.post];
+      const post = [...store.state.post.posts];
       const sortedPost = post.sort((a, b) => {
         return b.likes - a.likes
       })
       return sortedPost.slice(0, 4)
     })
 
+    const isLoading = computed(() => store.state.post.isLoading)
+
     const handleButtonLinkToSignUp = () => {
       router.push('/auth/signup')
     }
 
-    return { handleButtonLinkToSignUp, trendingPosts, getStringJustYearFormat }
+    return { handleButtonLinkToSignUp, trendingPosts, getStringJustYearFormat, isLoading }
   }
 }
 </script>

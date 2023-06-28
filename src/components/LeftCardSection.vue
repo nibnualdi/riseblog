@@ -43,7 +43,7 @@ export default {
     let page = ref(0)
 
     const totalPost = computed(()=> store.state.totalPost)
-    const post = computed(()=> store.state.post)
+    const post = computed(()=> store.state.post.posts)
 
     onMounted(()=>{
       const listBottomSide = document.querySelector("#listBottomSide");

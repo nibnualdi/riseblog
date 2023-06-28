@@ -3,7 +3,10 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-    post: [],
+    post: {
+      posts: [],
+      isLoading: false
+    },
     totalPost: 0,
     tag: ["all", "technology", "environment", "business", "politics"],
     singlePost: null
@@ -13,11 +16,14 @@ export default createStore({
   mutations: {
     updatePost(state, payload) {
       payload.forEach(element => {
-        state.post.push(element)
+        state.post.posts.push(element)
       });
     },
     clearPost(state) {
-      state.post = []
+      state.post.posts = []
+    },
+    updateIsLoadingPost(state, payload) {
+      state.post.isLoading = payload
     },
     updateTotalPost(state, payload) {
       state.totalPost = payload
@@ -28,24 +34,45 @@ export default createStore({
   },
   actions: {
     async getAllPost(context, { page=0 } = {}) {
-      const post = await axiosInstance.get(`/post?page=${page}`)
-      context.commit("updatePost", post.data.data)
-      context.commit("updateTotalPost", post.data.total)
-      console.log("post is updated : ", context.state.post, context.state.totalPost)
-    },
-    async getPostByTag(context, { category, page=0 }) {
-      if (category === "all") {
+      context.commit("updateIsLoadingPost", true)
+      console.log("isLoading is updated : ", context.state.post.isLoading)
+
+      try {
         const post = await axiosInstance.get(`/post?page=${page}`)
         context.commit("updatePost", post.data.data)
         context.commit("updateTotalPost", post.data.total)
+        context.commit("updateIsLoadingPost", false)
         console.log("post is updated : ", context.state.post, context.state.totalPost)
-        return post
+      } catch {
+        context.commit("updateIsLoadingPost", false)
+        console.log("post is updated : ", context.state.post, context.state.totalPost)
       }
 
-      const post = await axiosInstance.get(`/tag/${category}/post?page=${page}`)
-      context.commit("updatePost", post.data.data)
-      context.commit("updateTotalPost", post.data.total)
-      console.log("post is updated : ", context.state.post, context.state.totalPost)
+    },
+    async getPostByTag(context, { category, page=0 }) {
+      context.commit("updateIsLoadingPost", true)
+      console.log("isLoading is updated : ", context.state.post.isLoading)
+
+      try {
+        if (category === "all") {
+          const post = await axiosInstance.get(`/post?page=${page}`)
+          context.commit("updatePost", post.data.data)
+          context.commit("updateTotalPost", post.data.total)
+          context.commit("updateIsLoadingPost", false)
+          console.log("post is updated : ", context.state.post, context.state.totalPost)
+          return post
+        }
+  
+        const post = await axiosInstance.get(`/tag/${category}/post?page=${page}`)
+        context.commit("updatePost", post.data.data)
+        context.commit("updateTotalPost", post.data.total)
+        context.commit("updateIsLoadingPost", false)
+        console.log("post is updated : ", context.state.post, context.state.totalPost)
+      } catch {
+        context.commit("updateIsLoadingPost", false)
+        console.log("post is updated : ", context.state.post, context.state.totalPost)
+      }
+
     },
     async getASinglePost(context, payload) {
       const post = await axiosInstance.get(`/post/${payload}`)
