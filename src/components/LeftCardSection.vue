@@ -43,13 +43,14 @@ export default {
     let page = ref(0)
 
     const totalPost = computed(()=> store.state.totalPost)
+    const post = computed(()=> store.state.post)
 
     onMounted(()=>{
       const listBottomSide = document.querySelector("#listBottomSide");
   
       const obsever = new IntersectionObserver((entries)=>{
-        const postLength = store.state.post.length;
-        const isLimit = postLength === totalPost;
+        const postLength = post.value.length;
+        const isLimit = postLength === totalPost.value;
 
         if(entries[0].isIntersecting && !isLimit) {
           page.value += 1
