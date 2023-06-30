@@ -42,6 +42,8 @@ export default {
     const route = useRoute();
     let page = ref(0)
 
+    const categoryParams = computed(()=> {return route.params.category})
+
     const totalPost = computed(()=> store.state.totalPost)
     const post = computed(()=> store.state.post.posts)
 
@@ -61,15 +63,16 @@ export default {
       obsever.observe(listBottomSide)
     })
 
-
     onMounted(()=>{
-      store.commit("clearPost")
-      store.dispatch("getPostByTag", { category: route.params.category })
+      !post.value.length && store.dispatch("getPostByTag", { category: route.params.category })
     })
-
-    watch([route], ()=>{
-      store.commit("clearPost")
-      store.dispatch("getPostByTag", { category: route.params.category })
+    
+    watch([categoryParams], ()=>{
+      if(categoryParams.value) {
+        store.commit("clearPost")
+        store.dispatch("getPostByTag", { category: route.params.category })
+        return
+      }
     })
 
     const tags = computed(()=> store.state.tag)

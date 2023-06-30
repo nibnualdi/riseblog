@@ -30,13 +30,12 @@ export default {
     const currentElement = ref("")
 
     const store = useStore()
-    const posts = computed(() => store.state.post.posts)
-    const isLoading = computed(() => store.state.post.isLoading)
+    const posts = computed(() => store.state.sortedPostByLikes.posts)
+    const isLoading = computed(() => store.state.sortedPostByLikes.isLoading)
 
     // get posts from api
     onMounted(() => {
-      store.commit("clearPost")
-      store.dispatch("getAllPost")
+      !posts.value.length && store.dispatch("getSortedPostByLikes")
     })
 
     onMounted(() => {

@@ -30,7 +30,7 @@ import Card from "@/components/Card.vue"
 import RecomendedUser from "@/components/RecomendedUser.vue"
 import Skeleton from "@/components/Loading/Skeleton.vue"
 import { getStringJustYearFormat } from "@/utils/getStringDateFormat";
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 
@@ -45,15 +45,13 @@ export default {
   setup() {
     const router = useRouter();
     const store = useStore();
-    const trendingPosts = computed(() => {
-      const post = [...store.state.post.posts];
-      const sortedPost = post.sort((a, b) => {
-        return b.likes - a.likes
-      })
-      return sortedPost.slice(0, 4)
-    })
 
-    const isLoading = computed(() => store.state.post.isLoading)
+    const trendingPosts = computed(() => store.state.sortedPostByLikes.posts.slice(0, 4))
+    const isLoading = computed(() => store.state.sortedPostByLikes.isLoading)
+
+    onMounted(()=>{
+      !trendingPosts.value.length && store.dispatch("getSortedPostByLikes")
+    })
 
     const handleButtonLinkToSignUp = () => {
       router.push('/auth/signup')

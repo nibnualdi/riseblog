@@ -7,6 +7,10 @@ export default createStore({
       posts: [],
       isLoading: false
     },
+    sortedPostByLikes: {
+      posts: [],
+      isLoading: false
+    },
     totalPost: 0,
     tag: ["all", "technology", "environment", "business", "politics"],
     singlePost: null
@@ -24,6 +28,12 @@ export default createStore({
     },
     updateIsLoadingPost(state, payload) {
       state.post.isLoading = payload
+    },
+    updateSortedPostByLikes(state, payload) {
+      state.sortedPostByLikes.posts = payload
+    },
+    updateIsLoadingSortedPostByLikes(state, payload) {
+      state.sortedPostByLikes.isLoading = payload
     },
     updateTotalPost(state, payload) {
       state.totalPost = payload
@@ -73,6 +83,24 @@ export default createStore({
         console.log("post is updated : ", context.state.post, context.state.totalPost)
       }
 
+    },
+    async getSortedPostByLikes (context) {
+      context.commit("updateIsLoadingSortedPostByLikes", true)
+      console.log("isLoading is updated : ", context.state.sortedPostByLikes.isLoading)
+
+      try {
+        const post = await axiosInstance.get(`/post?page=0`)
+        const sortedPost = post.data.data.sort((a, b) => {
+          return b.likes - a.likes
+        })
+
+        context.commit("updateSortedPostByLikes", sortedPost)
+        context.commit("updateIsLoadingSortedPostByLikes", false)
+        console.log("sortedPostByLikes is updated : ", context.state.sortedPostByLikes)
+      } catch {
+        context.commit("updateIsLoadingSortedPostByLikes", false)
+        console.log("sortedPostByLikes is updated : ", context.state.sortedPostByLikes)
+      }
     },
     async getASinglePost(context, payload) {
       const post = await axiosInstance.get(`/post/${payload}`)
