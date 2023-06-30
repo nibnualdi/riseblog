@@ -29,6 +29,7 @@
 import Button from "@/components/Button.vue"
 import { computed } from "vue";
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 
 export default {
   name: "HomeCard",
@@ -38,9 +39,11 @@ export default {
   },
   setup(props) {
     const router = useRouter();
+    const store = useStore();
     const titleComputed = computed(()=> props.title.substring(0, 20))
 
     const handleButtonLinkReadMore = () => {
+      store.dispatch("getASinglePost", props.idPost)
       router.push(`/articles/${props.idPost}`)
     }
 

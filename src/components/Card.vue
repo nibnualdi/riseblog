@@ -55,7 +55,8 @@
 <script>
 import Button from "@/components/Button.vue"
 import { computed, onMounted, ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 
 export default {
   name: "Card",
@@ -65,7 +66,7 @@ export default {
   props: ["small", "trending", "title", "image", "desc", "owner", "tags", "date", "likes", "idPost"],
   setup({ small, trending, title, owner, idPost }) {
     const router = useRouter();
-    const route = useRoute();
+    const store = useStore();
 
     const titleComputed = computed(() => title?.substring(0, 20))
     const ownerName = computed(() => `${owner?.firstName} ${owner?.lastName}`)
@@ -110,6 +111,7 @@ export default {
     })
 
     const handleButtonLinkReadMore = () => {
+      store.dispatch("getASinglePost", idPost)
       router.push(`/articles/${idPost}`)
     }
     

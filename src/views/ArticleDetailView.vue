@@ -11,16 +11,16 @@
         </div> -->
 
         <div class="flex flex-col gap-[9px]">
-          <Skeleton small="true" v-if="isLoading" />
-          <Skeleton small="true" v-if="isLoading" />
-          <Skeleton small="true" v-if="isLoading" />
+          <Skeleton small="true" v-if="isLoadingPost" />
+          <Skeleton small="true" v-if="isLoadingPost" />
+          <Skeleton small="true" v-if="isLoadingPost" />
           <Card small="true" v-for="post in posts" :title="post.text" :image="post.image" :desc="post.text"
             :owner="post.owner" :tags="post.tags" date="asd" :likes="post.likes" :idPost="post.id" />
         </div>
       </div>
 
-      <Spinner v-if="isLoading" class="w-full max-w-[802px]" />
-      <div v-if="!isLoading" class="flex flex-col items-center max-w-[802px]">
+      <Spinner v-if="isLoadingSinglePost" class="w-full max-w-[802px]" />
+      <div v-if="!isLoadingSinglePost" class="flex flex-col items-center max-w-[802px]">
         <h1 class="text-[33px] text-[#1C1C1C] font-bold leading-[39.94px] mb-[36px]">{{ titleComputed }}</h1>
         <div>
           <img :src="singlePost?.image" alt="article">
@@ -54,19 +54,19 @@ export default {
     const route = useRoute()
     const store = useStore()
 
-    onMounted(() => {
-      store.dispatch("getASinglePost", route.params.id)
-      store.dispatch("getAllPost")
-    })
-
-    const singlePost = computed(() => store.state.singlePost)
+    const singlePost = computed(() => store.state.singlePost.post)
     const titleComputed = computed(() => singlePost.value?.text?.substring(0, 20))
 
     const posts = computed(() => store.state.post.posts.slice(0, 3))
     
-    const isLoading = computed(() => store.state.post.isLoading)
+    const isLoadingPost = computed(() => store.state.post.isLoading)
+    const isLoadingSinglePost = computed(() => store.state.post.isLoading)
 
-    return { singlePost, titleComputed, posts, isLoading }
+    onMounted(() => {
+      !posts.value.length && store.dispatch("getAllPost")
+    })
+
+    return { singlePost, titleComputed, posts, isLoadingPost, isLoadingSinglePost }
   }
 }
 </script>

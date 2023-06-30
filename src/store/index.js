@@ -13,7 +13,10 @@ export default createStore({
     },
     totalPost: 0,
     tag: ["all", "technology", "environment", "business", "politics"],
-    singlePost: null
+    singlePost: {
+      post: null,
+      isLoading: false
+    }
   },
   // getters: {
   // },
@@ -39,7 +42,10 @@ export default createStore({
       state.totalPost = payload
     },
     updateSinglePost(state, payload) {
-      state.singlePost = payload
+      state.singlePost.post = payload
+    },
+    updateIsLoadingSinglePost(state, payload) {
+      state.singlePost.isLoading = payload
     },
   },
   actions: {
@@ -103,9 +109,19 @@ export default createStore({
       }
     },
     async getASinglePost(context, payload) {
-      const post = await axiosInstance.get(`/post/${payload}`)
-      context.commit("updateSinglePost", post.data)
-      console.log("single post is updated : ", context.state.singlePost)
+      context.commit("updateIsLoadingSinglePost", true)
+      console.log("single post is updated : ", context.state.singlePost.isLoading)
+      
+      try {
+        const post = await axiosInstance.get(`/post/${payload}`)
+        context.commit("updateSinglePost", post.data)
+        context.commit("updateIsLoadingSinglePost", false)
+        console.log("single post is updated : ", context.state.singlePost)
+      } catch {
+        context.commit("updateIsLoadingSinglePost", false)
+        console.log("single post is updated : ", context.state.singlePost)
+      }
+
     },
   },
   // modules: {
