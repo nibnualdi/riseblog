@@ -13,6 +13,7 @@ export default createStore({
     },
     totalPost: 0,
     tag: ["all", "technology", "environment", "business", "politics"],
+    selectedTag: "all",
     singlePost: {
       post: null,
       isLoading: false
@@ -47,6 +48,10 @@ export default createStore({
     updateIsLoadingSinglePost(state, payload) {
       state.singlePost.isLoading = payload
     },
+    updateSelectedTag(state, payload) {
+      state.selectedTag = payload
+      console.log("selectedTag is updated : ", state.selectedTag)
+    }
   },
   actions: {
     async getAllPost(context, { page=0 } = {}) {

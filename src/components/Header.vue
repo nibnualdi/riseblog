@@ -6,7 +6,7 @@
     </div>
     <nav class="flex gap-[28px]">
       <router-link :to="{ name: 'Home' }">Home</router-link>
-      <router-link to="/articles/category/all">Articles</router-link>
+      <router-link :to="`/articles/category/${selectedTag}`">Articles</router-link>
       <router-link :to="{ name: 'About' }">About</router-link>
       <router-link :to="{ name: 'Contact' }">Contact</router-link>
       <img :src="searchIcon" alt="search">
@@ -16,11 +16,16 @@
 
 <script>
 import searchIcon from "@/assets/icons/search.svg"
+import { computed } from "vue";
+import { useStore } from "vuex";
 
 export default {
   name: "Header",
   setup() {
-    return { searchIcon }
+    const store = useStore()
+    const selectedTag = computed(()=>store.state.selectedTag)
+
+    return { searchIcon, selectedTag }
   }
 }
 </script>

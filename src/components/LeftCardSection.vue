@@ -16,7 +16,7 @@
         text="Create Account" fontWeight="font-semibold" class="block lg:hidden" @click="handleButtonLinkToSignUp" />
     </div>
     <div class="flex items-center gap-[50px] mb-[17px] capitalize">
-      <router-link v-for="tag in tags" :to="`/articles/category/${tag}`">{{ tag }}</router-link>
+      <router-link v-for="tag in tags" :to="`/articles/category/${tag}`" @click="handleChangeSelectedTag(tag)">{{ tag }}</router-link>
     </div>
     <ArticleLeftCards />
     <span id="listBottomSide"></span>
@@ -77,11 +77,15 @@ export default {
 
     const tags = computed(()=> store.state.tag)
 
+    const handleChangeSelectedTag = (tag) => {
+      store.commit('updateSelectedTag', tag)
+    }
+
     const handleButtonLinkToSignUp = () => {
       router.push('/auth/signup')
     }
 
-    return { handleButtonLinkToSignUp, tags }
+    return { handleButtonLinkToSignUp, tags, handleChangeSelectedTag }
   }
 }
 </script>
