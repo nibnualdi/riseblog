@@ -14,13 +14,13 @@
           :date="getStringJustYearFormat(trendingPost.publishDate)" :idPost="trendingPost.id" />
       </div>
     </div>
-    <div class="w-[338px] h-[246px] bg-[#FFFFFF] rounded-[12px] p-[19px]">
+    <!-- <div class="w-[338px] h-[246px] bg-[#FFFFFF] rounded-[12px] p-[19px]">
       <p class="text-[13px] text-[#1C1C1C] font-semibold">Recomended Users</p>
       <RecomendedUser />
       <RecomendedUser />
       <RecomendedUser />
       <RecomendedUser />
-    </div>
+    </div> -->
   </section>
 </template>
 
