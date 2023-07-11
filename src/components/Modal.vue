@@ -82,7 +82,6 @@ export default {
     const token = ref(Cookies.get('user'))
     let key1 = ref(0)
     let key2 = ref(0)
-    let isCopied = ref(false)
 
     const router = useRouter();
 
@@ -95,10 +94,8 @@ export default {
       navigator.clipboard.writeText(token.value);
       router.push("/auth/login")
 
-      isCopied.value = true
       store.commit("updateIsTokenCopiedSignup", true)
       setTimeout(() => {
-        isCopied.value = false
         store.commit("updateIsTokenCopiedSignup", false)
       }, 3500)
 
@@ -130,7 +127,7 @@ export default {
       store.commit("updateIsModalSignupOpen", false)
     }
 
-    return { handleClose, handleMove, position, handleUnforgivableButton, isUnforgivableButton, isCopied, token, isModalSignupOpen, isSignupFailed, errMessageSignup }
+    return { handleClose, handleMove, position, handleUnforgivableButton, isUnforgivableButton, token, isModalSignupOpen, isSignupFailed, errMessageSignup }
   }
 }
 </script>
