@@ -17,6 +17,13 @@ export default createStore({
     singlePost: {
       post: null,
       isLoading: false
+    },
+    signup: {
+      isModalSignupOpen: false,
+      isLoading: false,
+      isFailed: false,
+      errMessage: "",
+      isTokenCopied: false
     }
   },
   // getters: {
@@ -51,6 +58,23 @@ export default createStore({
     updateSelectedTag(state, payload) {
       state.selectedTag = payload
       console.log("selectedTag is updated : ", state.selectedTag)
+    },
+
+    // signup
+    updateIsModalSignupOpen(state, payload) {
+      state.signup.isModalSignupOpen = payload
+    },
+    updateIsLoadingSignup(state, payload) {
+      state.signup.isLoading = payload
+    },
+    updateIsFailedSignup(state, payload) {
+      state.signup.isFailed = payload
+    },
+    updateErrMessageSignup(state, payload) {
+      state.signup.errMessage = payload
+    },
+    updateIsTokenCopiedSignup(state, payload) {
+      state.signup.isTokenCopied = payload
     }
   },
   actions: {

@@ -7,16 +7,29 @@
     </transition>
   </router-view>
 
+  <Toast text="token copied to your clipboard." status="success" :isOpen="isTokenCopiedSignup" />
+
   <Footer />
 </template>
 
 <script>
 import Header from "@/components/Header.vue"
 import Footer from "@/components/Footer.vue"
+import Toast from "./components/Toast.vue";
+import { useStore } from "vuex";
+import { computed } from "vue";
 
 export default {
   name: "App",
-  components: { Header, Footer }
+  components: { Header, Footer, Toast },
+  setup() {
+    const store = useStore()
+    const isTokenCopiedSignup = computed(() => store.state.signup.isTokenCopied)
+
+    return {
+      isTokenCopiedSignup
+    }
+  }
 }
 </script>
 
@@ -27,6 +40,7 @@ export default {
   padding: 0;
   margin: 0;
 }
+
 body {
   background: #EFEFEF;
   overflow-x: hidden;
