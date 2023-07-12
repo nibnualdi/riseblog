@@ -43,7 +43,7 @@
         <input v-if="name === 'Login'" v-model="idUser"
           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="id" type="text" placeholder="id" />
-          <p class="text-xs text-red-500 ml-1 mb-[15px] transition-all duration-300"
+        <p class="text-xs text-red-500 ml-1 mb-[15px] transition-all duration-300"
           :class="errMessageValidation.id ? 'opacity-100 translate-y-1/2' : 'opacity-0 leading-[0px]'">
           {{ errMessageValidation.id }}</p>
         <!-- login inputs -->
@@ -131,7 +131,7 @@ export default {
         return
       }
 
-      if(!idUser.value) {
+      if (!idUser.value) {
         errMessageValidation.value.id = "id is required"
       } else {
         errMessageValidation.value.id = ""
@@ -140,13 +140,11 @@ export default {
           return user.id === idUser.value
         })
 
-        if(selectedUser.length) {
+        if (selectedUser.length) {
           router.push("/")
           Cookies.set('user', JSON.stringify(selectedUser[0]), { expires: 7 })
         }
       }
-      
-
     }
 
     const handleButtonToAnotherAuth = (name) => {
