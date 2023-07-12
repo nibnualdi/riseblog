@@ -43,6 +43,9 @@
         <input v-if="name === 'Login'" v-model="idUser"
           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="id" type="text" placeholder="id" />
+          <p class="text-xs text-red-500 ml-1 mb-[15px] transition-all duration-300"
+          :class="errMessageValidation.id ? 'opacity-100 translate-y-1/2' : 'opacity-0 leading-[0px]'">
+          {{ errMessageValidation.id }}</p>
         <!-- login inputs -->
         <button
           class="bg-[#3652E1] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
@@ -91,13 +94,14 @@ export default {
       firstName: "",
       lastName: "",
       email: "",
+      id: ""
     })
 
     const handleButton = async () => {
       if (name === "Sign Up") {
 
         Object.keys(errMessageValidation.value).map((e) => {
-          if (!user.value[e]) {
+          if (!user.value[e] && e !== "id") {
             errMessageValidation.value[e] = `${e} is required`
             return
           }
@@ -127,11 +131,22 @@ export default {
         return
       }
 
-      const userReq = await axiosInstance.get(`/user?created=1`)
-      const selectedUser = userReq.data.data.filter((user) => {
-        return user.id === idUser.value
-      })
-      console.log("idUser : ", selectedUser)
+      if(!idUser.value) {
+        errMessageValidation.value.id = "id is required"
+      } else {
+        errMessageValidation.value.id = ""
+        const userReq = await axiosInstance.get(`/user?created=1`)
+        const selectedUser = userReq.data.data.filter((user) => {
+          return user.id === idUser.value
+        })
+
+        if(selectedUser.length) {
+          router.push("/")
+          Cookies.set('user', JSON.stringify(selectedUser[0]), { expires: 7 })
+        }
+      }
+      
+
     }
 
     const handleButtonToAnotherAuth = (name) => {
