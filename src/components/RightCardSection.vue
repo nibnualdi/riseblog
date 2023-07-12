@@ -1,7 +1,7 @@
 <template>
   <section class="pt-[179px] flex-col items-center gap-[26px] hidden lg:flex">
     <Button widthAndHeight="w-[194px] h-[50.51px]" bgColor="bg-[#3652E1]" color="text-[#EFEFEF]" fontSize="text-[12px]"
-      text="Create Account" fontWeight="font-semibold" @click="handleButtonLinkToSignUp" />
+      text="Create Account" fontWeight="font-semibold" @click="handleButtonLinkToSignUp" v-if="!isAuth" />
     <div class="w-[338px] h-[298px] bg-[#FFFFFF] rounded-[12px] p-[19px]">
       <p class="text-[13px] text-[#1C1C1C] font-semibold">Trending</p>
       <div class="flex flex-col gap-[12px] mt-[14px]">
@@ -49,6 +49,8 @@ export default {
     const trendingPosts = computed(() => store.state.sortedPostByLikes.posts.slice(0, 4))
     const isLoading = computed(() => store.state.sortedPostByLikes.isLoading)
 
+    const isAuth = computed(() => store.state.isAuth)
+
     onMounted(()=>{
       !trendingPosts.value.length && store.dispatch("getSortedPostByLikes")
     })
@@ -57,7 +59,7 @@ export default {
       router.push('/auth/signup')
     }
 
-    return { handleButtonLinkToSignUp, trendingPosts, getStringJustYearFormat, isLoading }
+    return { handleButtonLinkToSignUp, trendingPosts, getStringJustYearFormat, isLoading, isAuth }
   }
 }
 </script>

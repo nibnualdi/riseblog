@@ -8,7 +8,7 @@
         <h1 class="bg-clip-text text-transparent bg-gradient-to-r from-[#3652E1] to-[#8057F5]">Article</h1>
         <h1>here</h1>
         <Button color="text-[#EFEFEF]" fontWeight="font-medium" fontSize="text-[15px]" bgColor="bg-[#3652E1]" widthAndHeight="w-[194px] h-[64px]" border="true" text="Create
-          Account" @click="handleButtonLinkToSignUp" />
+          Account" @click="handleButtonLinkToSignUp" v-if="!isAuth" />
       </div>
     </div>
   </section>
@@ -19,6 +19,8 @@
 import Circles from "@/components/Circles/Circles.vue"
 import Button from "@/components/Button.vue"
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
+import { computed } from "vue";
 
 export default {
   name: 'HomeView',
@@ -28,12 +30,14 @@ export default {
   },
   setup() {
     const router = useRouter();
+    const store = useStore()
+    const isAuth = computed(() => store.state.isAuth)
 
     const handleButtonLinkToSignUp = () => {
       router.push('/auth/signup')
     }
 
-    return { handleButtonLinkToSignUp }
+    return { handleButtonLinkToSignUp, isAuth }
   }
 }
 </script>

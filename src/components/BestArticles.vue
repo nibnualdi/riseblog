@@ -9,7 +9,7 @@
         <h1>Today</h1>
         <Button color="text-[#3652E1]" fontWeight="font-medium" fontSize="text-[15px]" bgColor="bg-[#EFEFEF]"
           widthAndHeight="w-[194px] h-[64px]" border="true" text="Create
-          Account" @click="handleButtonLinkToSignUp" />
+          Account" @click="handleButtonLinkToSignUp" v-if="!isAuth" />
       </div>
       <HomeCards />
     </div>
@@ -20,7 +20,9 @@
 import Button from "@/components/Button.vue"
 import HomeCards from "@/components/HomeCards/HomeCards.vue"
 import Ovals from "@/components/Ovals/Ovals.vue"
+import { computed } from "vue";
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 
 export default {
   name: "BestArticles",
@@ -31,12 +33,14 @@ export default {
   },
   setup() {
     const router = useRouter();
+    const store = useStore()
+    const isAuth = computed(() => store.state.isAuth)
 
     const handleButtonLinkToSignUp = () => {
       router.push('/auth/signup')
     }
 
-    return { handleButtonLinkToSignUp }
+    return { handleButtonLinkToSignUp, isAuth }
   }
 }
 </script>

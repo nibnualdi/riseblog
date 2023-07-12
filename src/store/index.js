@@ -24,7 +24,8 @@ export default createStore({
       isFailed: false,
       errMessage: "",
       isTokenCopied: false
-    }
+    },
+    isAuth: false
   },
   // getters: {
   // },
@@ -75,6 +76,10 @@ export default createStore({
     },
     updateIsTokenCopiedSignup(state, payload) {
       state.signup.isTokenCopied = payload
+    },
+    
+    updateIsAuth(state, payload) {
+      state.isAuth = payload
     }
   },
   actions: {

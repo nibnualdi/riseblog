@@ -63,7 +63,7 @@ export default {
     const store = useStore()
     const route = useRoute()
     const selectedTag = computed(() => store.state.selectedTag)
-    const isAuth = ref(false)
+    const isAuth = computed(() => store.state.isAuth)
     const user = ref({
       firstName: "",
       lastName: "",
@@ -77,14 +77,14 @@ export default {
       const parseOBJUser = JSON.parse(Cookies.get("user"))
 
       if (parseOBJUser.firstName) {
-        isAuth.value = true
+        store.commit("updateIsAuth", true)
         user.value = parseOBJUser
       }
     })
 
     watch(keyTrigger, () => {
       if (!Cookies.get("user")) {
-        isAuth.value = false
+        store.commit("updateIsAuth", false)
         user.value = {
           firstName: "",
           lastName: "",
