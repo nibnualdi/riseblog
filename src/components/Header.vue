@@ -1,31 +1,113 @@
 <template>
   <header
-    class="flex justify-between px-[146px] pt-[24px] pb-[17px] text-[13px] font-medium bg-[#EFEFEF] bg-opacity-[80%] w-[100%] fixed z-10">
+    class="flex justify-between items-center px-[146px] pt-[24px] pb-[17px] text-[13px] font-medium bg-[#EFEFEF] bg-opacity-[80%] w-[100%] fixed z-10"
+    :ref_key="keyTrigger">
     <div>
       <img src="@/assets/logo.png" alt="logo">
     </div>
-    <nav class="flex gap-[28px]">
-      <router-link :to="{ name: 'Home' }">Home</router-link>
-      <router-link :to="`/articles/category/${selectedTag}`">Articles</router-link>
-      <router-link :to="{ name: 'About' }">About</router-link>
-      <router-link :to="{ name: 'Contact' }">Contact</router-link>
-      <img :src="searchIcon" alt="search">
-    </nav>
+    <div class="flex gap-[30px]">
+      <nav class="flex gap-[28px] items-center">
+        <router-link :to="{ name: 'Home' }">Home</router-link>
+        <router-link :to="`/articles/category/${selectedTag}`">Articles</router-link>
+        <router-link :to="{ name: 'About' }">About</router-link>
+        <router-link :to="{ name: 'Contact' }">Contact</router-link>
+        <img :src="searchIcon" alt="search">
+      </nav>
+      <div class="profile relative">
+        <img id="avatarButton" type="button" data-dropdown-toggle="userDropdown" data-dropdown-placement="bottom-start"
+          class="w-10 h-10 rounded-full cursor-pointer" :src="user.picture && user.picture" alt="User dropdown"
+          v-if="user.picture" @click="handleDropdown">
+
+        <div
+          class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 cursor-pointer"
+          v-if="user.firstName && !user.picture" @click="handleDropdown">
+          <span class="font-medium text-gray-600 dark:text-gray-300">{{ `${user.firstName[0]}${user.lastName[0]}`
+          }}</span>
+        </div>
+
+        <!-- Dropdown menu -->
+        <div id="userDropdown"
+          class="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600 absolute transition-all ease-in-out duration-300"
+          :class="dropdownIsOpen ? 'opacity-100' : 'opacity-0'">
+          <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+            <div>{{ `${user.firstName} ${user.lastName}` }}</div>
+          </div>
+          <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="avatarButton">
+            <li>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Your
+                articles</a>
+            </li>
+          </ul>
+          <div class="py-1" @click="handleLogOut">
+            <div
+              class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white cursor-pointer">
+              Sign
+              out</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </header>
 </template>
 
 <script>
 import searchIcon from "@/assets/icons/search.svg"
-import { computed } from "vue";
+import Cookies from "js-cookie";
+import { computed, ref, watch } from "vue";
+import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 
 export default {
   name: "Header",
   setup() {
     const store = useStore()
-    const selectedTag = computed(()=>store.state.selectedTag)
+    const route = useRoute()
+    const selectedTag = computed(() => store.state.selectedTag)
+    const isAuth = ref(false)
+    const user = ref({
+      firstName: "",
+      lastName: "",
+      picture: ""
+    })
+    const dropdownIsOpen = ref(false)
+    const keyTrigger = ref(false)
 
-    return { searchIcon, selectedTag }
+    watch(route, () => {
+      if (!Cookies.get("user")) return
+      const parseOBJUser = JSON.parse(Cookies.get("user"))
+
+      if (parseOBJUser.firstName) {
+        isAuth.value = true
+        user.value = parseOBJUser
+      }
+    })
+
+    watch(keyTrigger, () => {
+      if (!Cookies.get("user")) {
+        isAuth.value = false
+        user.value = {
+          firstName: "",
+          lastName: "",
+          picture: ""
+        }
+      }
+    })
+
+    const handleDropdown = () => {
+      dropdownIsOpen.value = !dropdownIsOpen.value
+    }
+
+    const handleKeyTrigger = () => {
+      keyTrigger.value = !keyTrigger.value
+    }
+
+    const handleLogOut = () => {
+      Cookies.remove("user")
+      dropdownIsOpen.value = false
+      handleKeyTrigger()
+    }
+
+    return { searchIcon, selectedTag, isAuth, user, dropdownIsOpen, keyTrigger, handleDropdown, handleLogOut, handleKeyTrigger }
   }
 }
 </script>
