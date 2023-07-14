@@ -7,6 +7,7 @@ import LoginView from '../views/LoginView.vue'
 import SignUpView from '../views/SignUpView.vue'
 import AboutView from '../views/AboutView.vue'
 import ContactView from '../views/ContactView.vue'
+import YourArticle from '../views/YourArticle.vue'
 
 const routes = [
   {
@@ -56,6 +57,12 @@ const routes = [
     path: '/articles/category/:category',
     name: 'categoryArticles',
     component: ArticleView,
+  },
+
+  {
+    path: '/my-articles',
+    name: 'YourArticle',
+    component: YourArticle
   },
 ]
 

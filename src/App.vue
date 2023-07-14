@@ -41,9 +41,18 @@ export default {
   margin: 0;
 }
 
+html {
+  height: 100%;
+}
+
 body {
   background: #EFEFEF;
   overflow-x: hidden;
+  height: 100%;
+}
+
+#app {
+  height: 100%;
 }
 
 /* page changes transition */
