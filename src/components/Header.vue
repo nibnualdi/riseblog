@@ -34,7 +34,8 @@
           </div>
           <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="avatarButton">
             <li>
-              <router-link :to="{ name: 'YourArticle' }" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Your
+              <router-link :to="{ name: 'YourArticle' }"
+                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Your
                 articles</router-link>
             </li>
           </ul>
@@ -53,7 +54,7 @@
 <script>
 import searchIcon from "@/assets/icons/search.svg"
 import Cookies from "js-cookie";
-import { computed, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 
@@ -73,6 +74,8 @@ export default {
     const keyTrigger = ref(false)
 
     watch(route, () => {
+      dropdownIsOpen.value = false
+      
       if (!Cookies.get("user")) return
       const parseOBJUser = JSON.parse(Cookies.get("user"))
 
@@ -90,6 +93,21 @@ export default {
           lastName: "",
           picture: ""
         }
+      }
+    })
+
+    // make the dropdown to be disappear
+    // without it, the button on dropdown still can be press even the opacity dropdown is 0
+    watch(dropdownIsOpen, () => {
+      const dropdown = document.querySelector('#userDropdown')
+      if (!dropdownIsOpen.value) {
+        setTimeout(() => {
+          dropdown.style.display = "none"
+        }, 270)
+      } else {
+        setTimeout(() => {
+          dropdown.style.display = "block"
+        }, 270)
       }
     })
 
