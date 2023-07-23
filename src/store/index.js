@@ -18,6 +18,10 @@ export default createStore({
       post: null,
       isLoading: false
     },
+    postByUser: {
+      post: [],
+      isLoading: false
+    },
     signup: {
       isModalSignupOpen: false,
       isLoading: false,
@@ -59,6 +63,14 @@ export default createStore({
     updateSelectedTag(state, payload) {
       state.selectedTag = payload
       console.log("selectedTag is updated : ", state.selectedTag)
+    },
+    updatePostByUser(state, payload) {
+      payload.forEach((element)=>{
+        state.postByUser.post.push(element)
+      })
+    },
+    updateIsLoadingPostByUser(state, payload) {
+      state.postByUser.isLoading = payload
     },
 
     // signup
@@ -156,6 +168,20 @@ export default createStore({
         console.log("single post is updated : ", context.state.singlePost)
       }
 
+    },
+    async getPostByUser(context, payload) {
+      context.commit("updateIsLoadingPostByUser", true)
+      console.log("postByUser is updated : ", context.state.postByUser.isLoading)
+
+      try {
+        const post = await axiosInstance.get(`user/${payload}/post`)
+        context.commit("updatePostByUser", post.data.data)
+        context.commit("updateIsLoadingPostByUser", false)
+        console.log("postByUser is updated : ", context.state.postByUser)
+      } catch(err) {
+        context.commit("updateIsLoadingPostByUser", false)
+        console.log(err)
+      }
     },
   },
   // modules: {
