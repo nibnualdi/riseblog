@@ -72,6 +72,9 @@ export default createStore({
     updateIsLoadingPostByUser(state, payload) {
       state.postByUser.isLoading = payload
     },
+    clearPostByUser(state) {
+      state.postByUser.post = []
+    },
 
     // signup
     updateIsModalSignupOpen(state, payload) {
@@ -183,6 +186,10 @@ export default createStore({
         console.log(err)
       }
     },
+    async deletePost(_, payload) {
+      const post = await axiosInstance.delete(`post/${payload}`)
+      console.log(post)
+    }
   },
   // modules: {
   // }
