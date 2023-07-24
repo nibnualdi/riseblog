@@ -188,7 +188,6 @@ export default createStore({
     },
     async deletePost(_, payload) {
       const post = await axiosInstance.delete(`post/${payload}`)
-      console.log(post)
     }
   },
   // modules: {
