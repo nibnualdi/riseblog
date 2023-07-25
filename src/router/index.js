@@ -8,6 +8,7 @@ import SignUpView from '../views/SignUpView.vue'
 import AboutView from '../views/AboutView.vue'
 import ContactView from '../views/ContactView.vue'
 import YourArticle from '../views/YourArticle.vue'
+import AddArticle from '../views/AddArticle.vue'
 
 const routes = [
   {
@@ -63,6 +64,11 @@ const routes = [
     path: '/my-articles',
     name: 'YourArticle',
     component: YourArticle
+  },
+  {
+    path: '/add-article',
+    name: 'AddArticle',
+    component: AddArticle
   },
 ]
 
