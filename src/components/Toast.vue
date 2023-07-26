@@ -30,8 +30,29 @@
 </template>
 
 <script>
+import { onMounted, watch } from 'vue';
+
 export default {
   name: "Toast",
-  props: ["isOpen", "text", "status"]
+  props: ["isOpen", "text", "status"],
+  setup({ isOpen }) {
+
+    onMounted(()=>{
+      const toast = document.querySelector("#toast-success")
+      if(!toast) return
+
+      toast.classList.add("hidden")
+    })
+
+    watch(()=>isOpen, ()=>{
+      const toast = document.querySelector("#toast-success")
+
+      if(isOpen) return toast.classList.add("hidden")
+
+      setTimeout(() => {
+        toast.remove()
+      }, 350);
+    })
+  }
 }
 </script>

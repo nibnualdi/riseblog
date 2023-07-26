@@ -115,7 +115,7 @@ export default {
         store.commit("updateIsLoadingSignup", true)
         try {
           const userReq = await axiosInstance.post(`/user/create`, user.value)
-          Cookies.set('user', userReq.data.id, { expires: 7 })
+          Cookies.set('idUser', userReq.data.id, { expires: 7 })
           store.commit("updateIsModalSignupOpen", true)
           store.commit("updateIsLoadingSignup", false)
         } catch (err) {

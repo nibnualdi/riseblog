@@ -79,7 +79,7 @@ export default {
 
     let position = ref("top: 50%; left: 50%; transform: translate(-50%, -50%);")
     let isUnforgivableButton = ref(false)
-    const token = ref(Cookies.get('user'))
+    const token = computed(()=>Cookies.get('idUser'))
     let key1 = ref(0)
     let key2 = ref(0)
 
