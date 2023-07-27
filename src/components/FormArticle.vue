@@ -6,8 +6,10 @@
         placeholder="Title..." v-model="title">
     </div> -->
 
-    <div class="relative bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5 hover:cursor-pointer">
-      <div v-if="loadingImage" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-gray-800 opacity-50 flex flex-col gap-4 items-center justify-center w-full h-full">
+    <div
+      class="relative bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5 hover:cursor-pointer">
+      <div v-if="loadingImage"
+        class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-gray-800 opacity-50 flex flex-col gap-4 items-center justify-center w-full h-full">
         <Spinner />
         <!-- <p>Loading the image...</p> -->
       </div>
@@ -46,21 +48,31 @@
         placeholder="What's the article about..." v-model="desc"></textarea>
     </div>
 
-    <div class="w-full ml-2">
-      <span class="bg-purple-500 text-purple-100 text-sm font-medium mr-2 px-2.5 py-0.5 rounded">Purple</span>
+    <div class="flex flex-wrap gap-[3px] w-full ml-2">
+      <span class="flex items-center justify-between gap-1 bg-purple-500 text-purple-100 text-sm font-medium mr-2 px-2.5 py-0.5 rounded hover:cursor-pointer"
+        @click="handleRemoveTag(tag)"
+        v-for="tag in selectedTags">
+        {{ tag }}
+        <div class="w-4">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
+            className="w-6 h-6">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </div>
+      </span>
     </div>
 
-    <div class="mb-6">
+    <div class="mb-4">
       <input type="text" id="base-input"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-        placeholder="Add a tag..." @input="handleSearchTags($event)">
+        placeholder="Add a tag..." v-model="inputTags" @input="handleSearchTags($event)" @keydown="handleInputTagsEnter">
       <label for="base-input" class="block mb-2 text-sm font-medium text-gray-400 ml-2">Enter to make a new tag...</label>
     </div>
 
-    <div class="w-full ml-2">
+    <div class="flex flex-wrap gap-[3px] w-full ml-2">
       <span
         class="bg-purple-50 text-purple-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded border border-purple-400 hover:cursor-pointer"
-        v-for="tag in limitedTags">{{ tag }}</span>
+        v-for="tag in limitedTags" @click="handlePickTagButton">{{ tag }}</span>
     </div>
   </section>
 </template>
@@ -83,6 +95,8 @@ export default {
       url: "",
       ref: ""
     })
+    const selectedTags = ref([])
+    const inputTags = ref("")
     const tagsRef = ref([])
     const limitedTags = ref([])
     const loadingImage = ref(false)
@@ -117,6 +131,29 @@ export default {
       });
     }
 
+    const handleInputTagsEnter = (e) => {
+      const key = e.key
+
+      if (key.toLowerCase() !== "enter") return
+      if (inputTags.value === "") return
+
+      selectedTags.value.push(inputTags.value)
+      inputTags.value = ""
+    }
+
+    const handlePickTagButton = (e) => {
+      selectedTags.value.push(e.target.innerText)
+      inputTags.value = ""
+    }
+
+    const handleRemoveTag = (value) => {
+      const newTags = selectedTags.value.filter((tag)=>{
+        return tag !== value
+      })
+
+      selectedTags.value = newTags
+    }
+
     const handleUploadImage = async (e) => {
       const length = e.target.files.length
       if (!length) return
@@ -126,12 +163,12 @@ export default {
       const action = e.target.labels[0].classList[0]
       const image = e.target.files[0]
 
-      if(action === "add-image") {
+      if (action === "add-image") {
         const { downloadURL, ref } = await uploadFileFirebase(image)
         loadingImage.value = false
         return imageData.value = { url: downloadURL, ref }
       }
-      if(action === "change-image") {
+      if (action === "change-image") {
         deleteFileFireBase(imageData.value.ref)
 
         const { downloadURL, ref } = await uploadFileFirebase(image)
@@ -141,7 +178,7 @@ export default {
     }
 
 
-    return { tagsRef, limitedTags, handleSearchTags, title, desc, imageData, handleUploadImage, loadingImage }
+    return { inputTags, selectedTags, tagsRef, limitedTags, handleSearchTags, handlePickTagButton, handleRemoveTag, title, desc, imageData, handleUploadImage, loadingImage, handleInputTagsEnter }
   }
 }
 </script>
