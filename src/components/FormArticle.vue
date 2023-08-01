@@ -77,7 +77,8 @@
 
     <div class="flex flex-wrap justify-end gap-[3px] w-full ml-2 mt-4">
       <button type="button"
-        class="bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">Cancel</button>
+        class="bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2"
+        @click="handleCancelButton">Cancel</button>
       <button type="button"
         class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
         @click="handleUploadButton">
@@ -197,7 +198,7 @@ export default {
 
     const handleUploadButton = async () => {
       if (!desc.value || !imageData.value.url || !selectedTags.value.length) return alert("please fill all the input")
-      
+
       loadingUpload.value = true
 
       try {
@@ -218,7 +219,17 @@ export default {
       }
     }
 
-    return { inputTags, selectedTags, tagsRef, limitedTags, handleSearchTags, handlePickTagButton, handleRemoveTag, title, desc, imageData, handleUploadImage, loadingImage, handleInputTagsEnter, handleUploadButton, loadingUpload }
+    const handleCancelButton = () => {
+      if (imageData.value.ref) {
+        deleteFileFireBase(imageData.value.ref)
+        router.push("/my-articles")
+        return
+      }
+
+      router.push("/my-articles")
+    }
+
+    return { inputTags, selectedTags, tagsRef, limitedTags, handleSearchTags, handlePickTagButton, handleRemoveTag, title, desc, imageData, handleUploadImage, loadingImage, handleInputTagsEnter, handleUploadButton, loadingUpload, handleCancelButton }
   }
 }
 </script>
