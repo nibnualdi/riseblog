@@ -16,7 +16,10 @@
         <p class="whitespace-nowrap">Make a post</p>
       </button>
     </div>
-    <h1 v-if="!userPosts.length" class="mx-auto mt-48">You haven't posted anything yet</h1>
+    <h1 v-if="!userPosts.length && !userPostsIsLoading" class="mx-auto mt-48">You haven't posted anything yet</h1>
+    <div class="w-6 h-6 m-auto" v-if="userPostsIsLoading">
+      <Spinner />
+    </div>
     <div
       class="flex items-center justify-between bg-transparent border border-gray-200 rounded-lg shadow w-full hover:bg-[#3652E1] group transition-all"
       v-for="post in userPosts">
@@ -96,10 +99,12 @@ import { useStore } from 'vuex';
 import Cookies from 'js-cookie';
 import { useRouter } from 'vue-router';
 
+import Spinner from '@/components/Loading/Spinner.vue';
+
 export default {
   name: "YourArticle",
   components: {
-    // Card
+    Spinner,
   },
   setup() {
     const CONSTANS = [1, 2, 3, 4, 5]
@@ -153,7 +158,7 @@ export default {
       router.push(`/add-article`)
     }
 
-    return { CONSTANS, userPosts, handleButtonLinkReadMore, handleChangeSelectedTag, handleDelete, handleDeleteSubmit, selectedPost, handleLinkToAddArticle }
+    return { CONSTANS, userPosts, handleButtonLinkReadMore, handleChangeSelectedTag, handleDelete, handleDeleteSubmit, selectedPost, handleLinkToAddArticle, userPostsIsLoading }
   }
 }
 </script>
