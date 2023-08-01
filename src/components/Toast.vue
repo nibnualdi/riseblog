@@ -1,5 +1,5 @@
 <template>
-  <div id="toast-success"
+  <div id="toast-container"
     class="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-[#EFEFEF] rounded-lg shadow absolute transition-all duration-300"
     :class="isOpen ? 'opacity-100 -translate-x-1/2 -translate-y-1/2' : 'opacity-0 -translate-x-1/2 '"
     style="top: 85%; left: 50%;" role="alert">
@@ -35,23 +35,25 @@ import { onMounted, watch } from 'vue';
 export default {
   name: "Toast",
   props: ["isOpen", "text", "status"],
-  setup({ isOpen }) {
+  setup(props) {
 
     onMounted(()=>{
-      const toast = document.querySelector("#toast-success")
-      if(!toast) return
+      const toasts = document.querySelectorAll("#toast-container")
+      if(!toasts.length) return
 
-      toast.classList.add("hidden")
+      toasts.forEach((toast)=>{
+        toast.classList.add("hidden")
+      })
     })
 
-    watch(()=>isOpen, ()=>{
-      const toast = document.querySelector("#toast-success")
+    watch(()=>props.isOpen, ()=>{
+      const toasts = document.querySelectorAll("#toast-container")
 
-      if(isOpen) return toast.classList.add("hidden")
-
-      setTimeout(() => {
-        toast.remove()
-      }, 350);
+      toasts.forEach((toast)=>{
+        setTimeout(() => {
+          toast.classList.add("hidden")
+        }, 3000);
+      })
     })
   }
 }

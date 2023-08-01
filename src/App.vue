@@ -8,6 +8,9 @@
   </router-view>
 
   <Toast text="token copied to your clipboard." status="success" :isOpen="isTokenCopiedSignup" />
+  
+  <Toast :text="successMassagePostArticle" status="success" :isOpen="successMassagePostArticle.length" />
+  <Toast :text="errMassagePostArticle" status="failed" :isOpen="errMassagePostArticle.length" />
 
   <Footer />
 </template>
@@ -25,9 +28,13 @@ export default {
   setup() {
     const store = useStore()
     const isTokenCopiedSignup = computed(() => store.state.signup.isTokenCopied)
+    const successMassagePostArticle = computed(() => store.state.postArticle.successMessage)
+    const errMassagePostArticle = computed(() => store.state.postArticle.errorMessage)
 
     return {
-      isTokenCopiedSignup
+      isTokenCopiedSignup,
+      successMassagePostArticle,
+      errMassagePostArticle,
     }
   }
 }

@@ -29,7 +29,11 @@ export default createStore({
       errMessage: "",
       isTokenCopied: false
     },
-    isAuth: false
+    isAuth: false,
+    postArticle: {
+      successMessage: "",
+      errorMessage: "",
+    }
   },
   // getters: {
   // },
@@ -95,6 +99,19 @@ export default createStore({
     
     updateIsAuth(state, payload) {
       state.isAuth = payload
+    },
+
+    updatePostArticleSuccess(state, payload) {
+      state.postArticle.successMessage = payload
+      setTimeout(()=>{
+        state.postArticle.successMessage = ""
+      }, 3000)
+    },
+    updatePostArticleError(state, payload) {
+      state.postArticle.errorMessage = payload
+      setTimeout(()=>{
+        state.postArticle.errorMessage = ""
+      }, 3000)
     }
   },
   actions: {

@@ -49,9 +49,9 @@
     </div>
 
     <div class="flex flex-wrap gap-[3px] w-full ml-2">
-      <span class="flex items-center justify-between gap-1 bg-purple-500 text-purple-100 text-sm font-medium mr-2 px-2.5 py-0.5 rounded hover:cursor-pointer"
-        @click="handleRemoveTag(tag)"
-        v-for="tag in selectedTags">
+      <span
+        class="flex items-center justify-between gap-1 bg-purple-500 text-purple-100 text-sm font-medium mr-2 px-2.5 py-0.5 rounded hover:cursor-pointer"
+        @click="handleRemoveTag(tag)" v-for="tag in selectedTags">
         {{ tag }}
         <div class="w-4">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
@@ -74,6 +74,17 @@
         class="bg-purple-50 text-purple-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded border border-purple-400 hover:cursor-pointer"
         v-for="tag in limitedTags" @click="handlePickTagButton">{{ tag }}</span>
     </div>
+
+    <div class="flex flex-wrap justify-end gap-[3px] w-full ml-2 mt-4">
+      <button type="button"
+        class="bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">Cancel</button>
+      <button type="button"
+        class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+        @click="handleUploadButton">
+        <Spinner v-if="loadingUpload" />
+        <p v-if="!loadingUpload">Upload</p>
+      </button>
+    </div>
   </section>
 </template>
 
@@ -83,10 +94,13 @@ import { onMounted, ref, watch } from 'vue';
 import { uploadFileFirebase, deleteFileFireBase } from '@/utils/firebase/index'
 
 import Spinner from './Loading/Spinner.vue';
+import Cookies from 'js-cookie';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 
 export default {
   components: {
-    Spinner
+    Spinner,
   },
   setup() {
     const title = ref("")
@@ -100,6 +114,10 @@ export default {
     const tagsRef = ref([])
     const limitedTags = ref([])
     const loadingImage = ref(false)
+    const loadingUpload = ref(false)
+
+    const router = useRouter()
+    const store = useStore()
 
     onMounted(async () => {
       const tags = await axiosInstance.get("/tag")
@@ -147,7 +165,7 @@ export default {
     }
 
     const handleRemoveTag = (value) => {
-      const newTags = selectedTags.value.filter((tag)=>{
+      const newTags = selectedTags.value.filter((tag) => {
         return tag !== value
       })
 
@@ -177,8 +195,30 @@ export default {
       }
     }
 
+    const handleUploadButton = async () => {
+      if (!desc.value || !imageData.value.url || !selectedTags.value.length) return alert("please fill all the input")
+      
+      loadingUpload.value = true
 
-    return { inputTags, selectedTags, tagsRef, limitedTags, handleSearchTags, handlePickTagButton, handleRemoveTag, title, desc, imageData, handleUploadImage, loadingImage, handleInputTagsEnter }
+      try {
+        await axiosInstance.post("/post/create", {
+          text: desc.value,
+          image: imageData.value.url,
+          tags: selectedTags.value,
+          owner: Cookies.get("idUser")
+        })
+
+        loadingUpload.value = false
+        store.commit("updatePostArticleSuccess", "article is posted")
+        router.push("/my-articles")
+      } catch (err) {
+        loadingUpload.value = false
+        store.commit("updatePostArticleError", "article is not posted, there's somthing wrong")
+        console.log(err)
+      }
+    }
+
+    return { inputTags, selectedTags, tagsRef, limitedTags, handleSearchTags, handlePickTagButton, handleRemoveTag, title, desc, imageData, handleUploadImage, loadingImage, handleInputTagsEnter, handleUploadButton, loadingUpload }
   }
 }
 </script>
