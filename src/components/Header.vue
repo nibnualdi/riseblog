@@ -14,13 +14,16 @@
         <!-- <img :src="searchIcon" alt="search"> -->
       </nav>
       <div class="profile relative">
-        <img id="avatarButton" type="button" data-dropdown-toggle="userDropdown" data-dropdown-placement="bottom-start"
-          class="w-10 h-10 rounded-full cursor-pointer" :src="user.picture && user.picture" alt="User dropdown"
-          v-if="user.picture" @click="handleDropdown">
+        <div class="relative w-10 h-10 rounded-full overflow-hidden" v-if="user.picture">
+          <input type="text" value="" @focus="handleDropdownOpen" @blur="handleDropdownClose" class="h-full focus:outline-none absolute opacity-0 cursor-pointer" readonly>
+          <img type="button" class="w-10 h-10 rounded-full cursor-pointer" :src="user.picture && user.picture" alt="User dropdown">
+        </div>
+          
 
         <div
           class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 cursor-pointer"
-          v-if="user.firstName && !user.picture" @click="handleDropdown">
+          v-if="user.firstName && !user.picture">
+          <input type="text" value="" @focus="handleDropdownOpen" @blur="handleDropdownClose" class="h-full focus:outline-none absolute opacity-0 cursor-pointer" readonly>
           <span class="font-medium text-gray-600 dark:text-gray-300">{{ `${user.firstName[0]}${user.lastName[0]}`
           }}</span>
         </div>
@@ -103,6 +106,7 @@ export default {
     // make the dropdown to be disappear
     // without it, the button on dropdown still can be press even the opacity dropdown is 0
     watch(dropdownIsOpen, () => {
+      console.log(dropdownIsOpen.value)
       const dropdown = document.querySelector('#userDropdown')
       if (!dropdownIsOpen.value) {
         dropdown.classList.add('opacity-0')
@@ -121,6 +125,12 @@ export default {
     const handleDropdown = () => {
       dropdownIsOpen.value = !dropdownIsOpen.value
     }
+    const handleDropdownOpen = () => {
+      dropdownIsOpen.value = true
+    }
+    const handleDropdownClose = () => {
+      dropdownIsOpen.value = false
+    }
 
     const handleKeyTrigger = () => {
       keyTrigger.value = !keyTrigger.value
@@ -137,7 +147,7 @@ export default {
       router.push("/auth/signup")
     }
 
-    return { searchIcon, selectedTag, isAuth, user, dropdownIsOpen, keyTrigger, handleDropdown, handleLogOut, handleKeyTrigger, handleToLogin, route }
+    return { searchIcon, selectedTag, isAuth, user, dropdownIsOpen, keyTrigger, handleDropdown, handleLogOut, handleKeyTrigger, handleToLogin, route, handleDropdownOpen, handleDropdownClose }
   }
 }
 </script>
