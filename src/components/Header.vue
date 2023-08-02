@@ -106,7 +106,6 @@ export default {
     // make the dropdown to be disappear
     // without it, the button on dropdown still can be press even the opacity dropdown is 0
     watch(dropdownIsOpen, () => {
-      console.log(dropdownIsOpen.value)
       const dropdown = document.querySelector('#userDropdown')
       if (!dropdownIsOpen.value) {
         dropdown.classList.add('opacity-0')
