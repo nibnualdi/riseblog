@@ -1,5 +1,5 @@
 <template>
-  <section class="flex justify-center items-center h-[813px] scale-75 md:scale-100">
+  <section class="flex justify-center items-center h-[813px] scale-75 md:scale-95">
     <div class="relative w-[977px] h-[519px] bg-[#FFFFFF] rounded-[40px] flex items-center gap-[29px] overflow-hidden">
       <div class="absolute w-[400px] h-full translate-x-20 md:translate-x-0">
         <Oval bgGradient="true" widthAndHeight="w-[42.94px] h-[160.14px] scale-75 md:scale-100" position="top-[-59px] left-[150px]" rotate="rotate-[-64.07deg]" />
