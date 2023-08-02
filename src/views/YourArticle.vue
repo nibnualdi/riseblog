@@ -61,7 +61,7 @@
 
     <!-- modal -->
     <div id="popup-modal" tabindex="-1"
-      class="fixed top-0 left-0 right-0 z-50 hidden target:block p-4 md:inset-0 h-[calc(100%-1rem)] max-h-full overflow-hidden">
+      class="fixed top-0 left-0 right-0 z-50 hidden target:block p-4 lg:inset-0 h-[calc(100%-1rem)] max-h-full overflow-hidden">
       <div class="relative w-full h-screen">
         <div
           class="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow dark:bg-gray-700">

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex gap-[22px] items-center max-w-[630px] w-[100%] overflow-auto oval-cards">
+  <div class="flex gap-[22px] items-center max-w-[630px] w-[350px] scale-90 lg:scale-100 lg:w-full overflow-auto oval-cards">
     <OvalCard name="Technology" image="tech.png" />
     <OvalCard name="Environment" image="env.png" />
     <OvalCard name="Business" image="buss.png" />

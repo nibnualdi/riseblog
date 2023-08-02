@@ -1,11 +1,11 @@
 <template>
   <header
-    class="flex justify-between items-center px-[146px] pt-[24px] pb-[17px] text-[13px] font-medium bg-[#EFEFEF] bg-opacity-[80%] w-[100%] fixed z-10"
+    class="flex justify-between items-center flex-col gap-5 lg:gap-0 lg:flex-row px-[146px] pt-[24px] pb-[17px] text-[13px] font-medium bg-[#EFEFEF] bg-opacity-[80%] w-[100%] fixed z-10"
     :ref_key="keyTrigger">
     <div>
       <img src="@/assets/logo.png" alt="logo">
     </div>
-    <div class="flex gap-[30px]">
+    <div class="flex gap-4 lg:gap-[30px]">
       <nav class="flex gap-[28px] items-center">
         <router-link :to="{ name: 'Home' }">Home</router-link>
         <router-link :to="`/articles/category/${selectedTag}`">Articles</router-link>

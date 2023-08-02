@@ -1,7 +1,7 @@
 <template>
   <section class="flex justify-center">
     <Ovals />
-    <div class="text-[90px] font-semibold text-[#1C1C1C] leading-[109px] grid grid-cols-2 gap-[30px] px-[247px] py-[189px] w-[max(1460px,80%)]">
+    <div class="text-[90px] font-semibold text-[#1C1C1C] leading-[109px] flex flex-col justify-center items-center lg:grid lg:grid-cols-2 gap-[30px] px-3 lg:px-[247px] py-[189px] w-[max(1460px,80%)]">
       <div class="flex flex-col max-w-[550px] col-start-1 col-end-2 justify-self-end">
         <h1>Find Your</h1>
         <h1>Best</h1>

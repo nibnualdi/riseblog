@@ -1,5 +1,5 @@
 <template>
-  <div class="flex gap-[31px] max-w-[700px] w-[50%] overflow-auto home-cards" @click="handleScroll">
+  <div class="flex gap-[31px] max-w-[700px] min-w-[330px] w-[50%] overflow-auto home-cards" @click="handleScroll">
     <Skeleton v-if="isLoading" />
     <Skeleton v-if="isLoading" />
     <Skeleton v-if="isLoading" />
