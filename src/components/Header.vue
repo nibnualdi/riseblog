@@ -30,8 +30,8 @@
 
         <!-- Dropdown menu -->
         <div id="userDropdown"
-          class="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600 absolute transition-all ease-in-out duration-300"
-          :class="dropdownIsOpen ? 'opacity-100' : 'opacity-0'">
+          class="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600 absolute transition-all ease-in-out duration-300 hidden opacity-0"
+          >
           <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
             <div>{{ `${user.firstName} ${user.lastName}` }}</div>
           </div>
@@ -105,13 +105,16 @@ export default {
     watch(dropdownIsOpen, () => {
       const dropdown = document.querySelector('#userDropdown')
       if (!dropdownIsOpen.value) {
+        dropdown.classList.add('opacity-0')
+        dropdown.classList.replace('opacity-100', 'opacity-0')
         setTimeout(() => {
           dropdown.style.display = "none"
         }, 270)
       } else {
+        dropdown.style.display = "block"
         setTimeout(() => {
-          dropdown.style.display = "block"
-        }, 270)
+          dropdown.classList.add('opacity-100')
+        }, 10)
       }
     })
 
