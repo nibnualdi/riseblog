@@ -11,7 +11,7 @@
         <router-link :to="`/articles/category/${selectedTag}`">Articles</router-link>
         <router-link :to="{ name: 'About' }">About</router-link>
         <router-link :to="{ name: 'Contact' }">Contact</router-link>
-        <img :src="searchIcon" alt="search">
+        <!-- <img :src="searchIcon" alt="search"> -->
       </nav>
       <div class="profile relative">
         <img id="avatarButton" type="button" data-dropdown-toggle="userDropdown" data-dropdown-placement="bottom-start"
@@ -24,6 +24,9 @@
           <span class="font-medium text-gray-600 dark:text-gray-300">{{ `${user.firstName[0]}${user.lastName[0]}`
           }}</span>
         </div>
+
+        <div class="hover:cursor-pointer p-2 rounded-lg bg-[#3652E1] text-slate-200"
+          v-if="!user.firstName && !route.path.includes('auth')" @click="handleToLogin('signup')">Login</div>
 
         <!-- Dropdown menu -->
         <div id="userDropdown"
@@ -55,7 +58,7 @@
 import searchIcon from "@/assets/icons/search.svg"
 import Cookies from "js-cookie";
 import { computed, onMounted, ref, watch } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
 
 export default {
@@ -63,6 +66,7 @@ export default {
   setup() {
     const store = useStore()
     const route = useRoute()
+    const router = useRouter()
     const selectedTag = computed(() => store.state.selectedTag)
     const isAuth = computed(() => store.state.isAuth)
     const user = ref({
@@ -125,7 +129,12 @@ export default {
       handleKeyTrigger()
     }
 
-    return { searchIcon, selectedTag, isAuth, user, dropdownIsOpen, keyTrigger, handleDropdown, handleLogOut, handleKeyTrigger }
+    const handleToLogin = (page) => {
+      if(page === 'signup') return router.push("/auth/login")
+      router.push("/auth/signup")
+    }
+
+    return { searchIcon, selectedTag, isAuth, user, dropdownIsOpen, keyTrigger, handleDropdown, handleLogOut, handleKeyTrigger, handleToLogin, route }
   }
 }
 </script>
