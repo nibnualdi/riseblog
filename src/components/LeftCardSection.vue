@@ -12,8 +12,8 @@
             class="absolute top-[11px] left-[10px]">
         </div> -->
       </div>
-      <Button widthAndHeight="w-[134px] h-[50.51px] lg:w-[194px]" bgColor="bg-[#3652E1]" color="text-[#EFEFEF]" fontSize="text-[12px]"
-        text="Create Account" fontWeight="font-semibold" class="block" @click="handleButtonLinkToSignUp" v-if="!isAuth" />
+      <!-- <Button widthAndHeight="w-[134px] h-[50.51px] lg:w-[194px]" bgColor="bg-[#3652E1]" color="text-[#EFEFEF]" fontSize="text-[12px]"
+        text="Create Account" fontWeight="font-semibold" class="block" @click="handleButtonLinkToSignUp" v-if="!isAuth" /> -->
     </div>
     <div class="flex items-center gap-[10px] lg:gap-[50px] mb-[17px] capitalize">
       <router-link v-for="tag in tags" :to="`/articles/category/${tag}`" @click="handleChangeSelectedTag(tag)">{{ tag }}</router-link>

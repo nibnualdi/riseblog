@@ -1,11 +1,11 @@
 <template>
   <section class="pt-[135px] px-8 lg:px-[146px] min-h-full flex flex-col gap-5">
 
-    <div class="flex justify-between">
+    <div class="flex justify-between items-center">
       <h1 class="text-[50px] font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#3652E1] to-[#8057F5]">Your
         Articles</h1>
-      <!-- <button
-        class="flex items-center gap-2 w-fit text-white bg-[#8057F5] hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2"
+      <button
+        class="flex items-center gap-2 lg:w-fit text-white bg-[#8057F5] hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 h-14"
         @click="handleLinkToAddArticle">
         <div class="w-5">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
@@ -13,8 +13,8 @@
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
           </svg>
         </div>
-        <p class="whitespace-nowrap">Make a post</p>
-      </button> -->
+        <p class="whitespace-nowrap hidden lg:block">Make a post</p>
+      </button>
     </div>
     <h1 v-if="!userPosts.length && !userPostsIsLoading" class="mx-auto mt-48">You haven't posted anything yet</h1>
     <div class="w-6 h-6 m-auto" v-if="userPostsIsLoading">
