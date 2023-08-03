@@ -1,10 +1,10 @@
 <template>
-  <section class="pt-[135px] px-[146px] min-h-full flex flex-col gap-5">
+  <section class="pt-[135px] px-8 lg:px-[146px] min-h-full flex flex-col gap-5">
 
     <div class="flex justify-between">
       <h1 class="text-[50px] font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#3652E1] to-[#8057F5]">Your
         Articles</h1>
-      <button
+      <!-- <button
         class="flex items-center gap-2 w-fit text-white bg-[#8057F5] hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2"
         @click="handleLinkToAddArticle">
         <div class="w-5">
@@ -14,17 +14,17 @@
           </svg>
         </div>
         <p class="whitespace-nowrap">Make a post</p>
-      </button>
+      </button> -->
     </div>
     <h1 v-if="!userPosts.length && !userPostsIsLoading" class="mx-auto mt-48">You haven't posted anything yet</h1>
     <div class="w-6 h-6 m-auto" v-if="userPostsIsLoading">
       <Spinner />
     </div>
     <div
-      class="flex items-center justify-between bg-transparent border border-gray-200 rounded-lg shadow w-full hover:bg-[#3652E1] group transition-all"
+      class="block lg:flex items-center justify-between bg-transparent border border-gray-200 rounded-lg shadow w-full hover:bg-[#3652E1] group transition-all"
       v-for="post in userPosts">
-      <div class="flex">
-        <img class="object-cover w-40 rounded-none rounded-l-lg hover:cursor-pointer" :src="post.image" alt=""
+      <div class="block lg:flex">
+        <img class="object-cover w-full lg:w-40 rounded-t-lg lg:rounded-none lg:rounded-l-lg hover:cursor-pointer" :src="post.image" alt=""
           @click="handleButtonLinkReadMore(post.id)">
         <div class="flex flex-col justify-between p-4 leading-normal">
           <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 group-hover:text-gray-100 hover:cursor-pointer"
@@ -38,7 +38,7 @@
           </div>
         </div>
       </div>
-      <div class="flex gap-1 mr-10">
+      <div class="flex gap-1 m-3 lg:mr-10 justify-end lg:justify-start">
         <div class="w-[50px] rounded-md bg-blue-600  hover:bg-blue-800 text-white p-3 hover:cursor-pointer">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
             className="w-6 h-6">
