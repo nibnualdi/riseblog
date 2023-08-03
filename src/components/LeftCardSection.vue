@@ -13,7 +13,7 @@
         </div> -->
       </div>
       <Button widthAndHeight="w-[134px] h-[50.51px] lg:w-[194px]" bgColor="bg-[#3652E1]" color="text-[#EFEFEF]" fontSize="text-[12px]"
-        text="Create Account" fontWeight="font-semibold" class="block" @click="handleButtonLinkToSignUp" />
+        text="Create Account" fontWeight="font-semibold" class="block" @click="handleButtonLinkToSignUp" v-if="!isAuth" />
     </div>
     <div class="flex items-center gap-[10px] lg:gap-[50px] mb-[17px] capitalize">
       <router-link v-for="tag in tags" :to="`/articles/category/${tag}`" @click="handleChangeSelectedTag(tag)">{{ tag }}</router-link>
@@ -43,6 +43,7 @@ export default {
     let page = ref(0)
 
     const categoryParams = computed(()=> {return route.params.category})
+    const isAuth = computed(() => store.state.isAuth)
 
     const totalPost = computed(()=> store.state.totalPost)
     const post = computed(()=> store.state.post.posts)
@@ -85,7 +86,7 @@ export default {
       router.push('/auth/signup')
     }
 
-    return { handleButtonLinkToSignUp, tags, handleChangeSelectedTag }
+    return { handleButtonLinkToSignUp, tags, handleChangeSelectedTag, isAuth }
   }
 }
 </script>
