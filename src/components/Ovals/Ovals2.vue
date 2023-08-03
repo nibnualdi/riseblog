@@ -1,5 +1,5 @@
 <template>
-  <div class="absolute top-0 z-[-10] w-screen h-screen">
+  <div class="absolute top-0 z-[-10] w-screen h-screen scale-[70%] -translate-x-6 lg:scale-100 lg:translate-x-0">
     <Oval borderColorGradient="true" fillColor="bg-[#EFEFEF]" borderWidth="p-[13px]" widthAndHeight="w-[140.6px] h-[49.63px]" position="top-[89px] left-[-44.72px]" rotate="rotate-[30.62deg]" />
     <Oval borderColorGradient="true" fillColor="bg-[#EFEFEF]" borderWidth="p-[25px]" widthAndHeight="w-[64px] h-[200.1px]" position="top-[219px] left-[4.34px]" rotate="rotate-[46.58deg]" />
     <Oval borderColorGradient="true" fillColor="bg-[#EFEFEF]" borderWidth="p-[18px]" widthAndHeight="w-[189.79px] h-[88.65px]" position="top-[437.57px] left-[19.69px]" rotate="rotate-[-126.4deg]" />

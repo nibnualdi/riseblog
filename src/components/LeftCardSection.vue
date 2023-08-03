@@ -1,6 +1,6 @@
 <template>
-  <section class="pt-[135px]">
-    <div class="flex items-center justify-between">
+  <section class="pt-[135px] flex flex-col items-center">
+    <div class="w-full flex items-center justify-between">
       <div>
         <h1
           class="bg-clip-text text-transparent bg-gradient-to-r from-[#3652E1] to-[#8057F5] text-[46px] font-bold mb-[5px]">
@@ -12,10 +12,10 @@
             class="absolute top-[11px] left-[10px]">
         </div> -->
       </div>
-      <Button widthAndHeight="w-[194px] h-[50.51px]" bgColor="bg-[#3652E1]" color="text-[#EFEFEF]" fontSize="text-[12px]"
-        text="Create Account" fontWeight="font-semibold" class="block lg:hidden" @click="handleButtonLinkToSignUp" />
+      <Button widthAndHeight="w-[134px] h-[50.51px] lg:w-[194px]" bgColor="bg-[#3652E1]" color="text-[#EFEFEF]" fontSize="text-[12px]"
+        text="Create Account" fontWeight="font-semibold" class="block" @click="handleButtonLinkToSignUp" />
     </div>
-    <div class="flex items-center gap-[50px] mb-[17px] capitalize">
+    <div class="flex items-center gap-[10px] lg:gap-[50px] mb-[17px] capitalize">
       <router-link v-for="tag in tags" :to="`/articles/category/${tag}`" @click="handleChangeSelectedTag(tag)">{{ tag }}</router-link>
     </div>
     <ArticleLeftCards />
