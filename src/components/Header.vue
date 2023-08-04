@@ -21,10 +21,10 @@
           
 
         <div
-          class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 cursor-pointer"
+          class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden rounded-full bg-gray-600 cursor-pointer"
           v-if="user.firstName && !user.picture">
           <input type="text" value="" @focus="handleDropdownOpen" @blur="handleDropdownClose" class="h-full focus:outline-none absolute opacity-0 cursor-pointer" readonly>
-          <span class="font-medium text-gray-600 dark:text-gray-300">{{ `${user.firstName[0]}${user.lastName[0]}`
+          <span class="font-medium text-gray-300">{{ `${user.firstName[0]}${user.lastName[0]}`
           }}</span>
         </div>
 
@@ -33,21 +33,21 @@
 
         <!-- Dropdown menu -->
         <div id="userDropdown"
-          class="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600 absolute transition-all ease-in-out duration-300 hidden opacity-0"
+          class="z-10divide-y rounded-lg shadow w-44 bg-gray-700 divide-gray-600 absolute transition-all ease-in-out duration-300 hidden opacity-0"
           >
-          <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+          <div class="px-4 py-3 text-sm text-white">
             <div>{{ `${user.firstName} ${user.lastName}` }}</div>
           </div>
-          <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="avatarButton">
+          <ul class="py-2 text-sm text-gray-200" aria-labelledby="avatarButton">
             <li>
               <router-link :to="{ name: 'YourArticle' }"
-                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Your
+                class="block px-4 py-2 hover:bg-gray-600 hover:text-white">Your
                 articles</router-link>
             </li>
           </ul>
           <div class="py-1" @click="handleLogOut">
             <div
-              class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white cursor-pointer">
+              class="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white cursor-pointer">
               Sign
               out</div>
           </div>
