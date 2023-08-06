@@ -201,7 +201,7 @@ export default {
         return tag !== value
       })
 
-      article.value.tags.value = newTags
+      article.value.tags = newTags
     }
 
     const handleUploadImage = async (e) => {
