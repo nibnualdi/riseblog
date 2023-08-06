@@ -9,6 +9,7 @@ import AboutView from '../views/AboutView.vue'
 import ContactView from '../views/ContactView.vue'
 import YourArticle from '../views/YourArticle.vue'
 import AddArticle from '../views/AddArticle.vue'
+import EditArticle from '../views/EditArticle.vue'
 
 const routes = [
   {
@@ -69,6 +70,11 @@ const routes = [
     path: '/add-article',
     name: 'AddArticle',
     component: AddArticle
+  },
+  {
+    path: '/edit-article/:id',
+    name: 'EditArticle',
+    component: EditArticle
   },
 ]
 

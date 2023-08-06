@@ -39,7 +39,7 @@
         </div>
       </div>
       <div class="flex gap-1 m-3 lg:mr-10 justify-end lg:justify-start">
-        <div class="w-[50px] rounded-md bg-blue-600  hover:bg-blue-800 text-white p-3 hover:cursor-pointer">
+        <div class="w-[50px] rounded-md bg-blue-600  hover:bg-blue-800 text-white p-3 hover:cursor-pointer" @click="handleButtonToEditPage(post.id)">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
             className="w-6 h-6">
             <path strokeLinecap="round" strokeLinejoin="round"
@@ -134,6 +134,10 @@ export default {
       router.push(`/articles/category/${tag}`)
       store.commit("clearPost")
     }
+    
+    const handleButtonToEditPage = (id) => {
+      router.push(`/edit-article/${id}`)
+    }
 
     const handleDelete = (post) => {
       selectedPost.value = post
@@ -158,7 +162,7 @@ export default {
       router.push(`/add-article`)
     }
 
-    return { CONSTANS, userPosts, handleButtonLinkReadMore, handleChangeSelectedTag, handleDelete, handleDeleteSubmit, selectedPost, handleLinkToAddArticle, userPostsIsLoading }
+    return { CONSTANS, userPosts, handleButtonLinkReadMore, handleChangeSelectedTag, handleButtonToEditPage, handleDelete, handleDeleteSubmit, selectedPost, handleLinkToAddArticle, userPostsIsLoading }
   }
 }
 </script>

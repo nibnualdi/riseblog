@@ -96,7 +96,7 @@ import { uploadFileFirebase, deleteFileFireBase } from '@/utils/firebase/index'
 
 import Spinner from './Loading/Spinner.vue';
 import Cookies from 'js-cookie';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 
 export default {
@@ -118,7 +118,22 @@ export default {
     const loadingUpload = ref(false)
 
     const router = useRouter()
+    const route = useRoute()
     const store = useStore()
+
+    // fill the form for edit
+    onMounted(async () => {
+      const idPost = route.params.id
+
+      if (idPost) {
+        const post = await axiosInstance.get(`/post/${idPost}`)
+
+        desc.value = post.data.text
+        imageData.value.url = post.data.image
+        imageData.value.ref = idPost
+        selectedTags.value = post.data.tags
+      }
+    })
 
     onMounted(async () => {
       const tags = await axiosInstance.get("/tag")
@@ -200,13 +215,35 @@ export default {
       if (!desc.value || !imageData.value.url || !selectedTags.value.length) return alert("please fill all the input")
 
       loadingUpload.value = true
+      const userId = JSON.parse(Cookies.get("user")).id
+
+      const idPost = route.params.id
+      if (idPost) {
+        try {
+          await axiosInstance.put(`/post/${idPost}`, {
+            text: desc.value,
+            image: imageData.value.url,
+            tags: selectedTags.value,
+            owner: userId
+          })
+
+          loadingUpload.value = false
+          store.commit("updatePostArticleSuccess", "article is updated")
+          router.push("/my-articles")
+        } catch {
+          loadingUpload.value = false
+          store.commit("updatePostArticleError", "article is not updated, there's somthing wrong")
+          console.log(err, "updated")
+        }
+        return
+      }
 
       try {
         await axiosInstance.post("/post/create", {
           text: desc.value,
           image: imageData.value.url,
           tags: selectedTags.value,
-          owner: Cookies.get("idUser")
+          owner: userId
         })
 
         loadingUpload.value = false
@@ -215,7 +252,7 @@ export default {
       } catch (err) {
         loadingUpload.value = false
         store.commit("updatePostArticleError", "article is not posted, there's somthing wrong")
-        console.log(err)
+        console.log(err, "posted")
       }
     }
 
