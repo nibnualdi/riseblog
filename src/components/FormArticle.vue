@@ -235,17 +235,14 @@ export default {
       if (!article.value.desc || !article.value.image.url || !article.value.tags.length) {
         Object.keys(errMessageValidation.value).map((e) => {
           if (!article.value[e].length && e !== "image") {
-            // console.log(e, article.value[e].length, article.value[e], "article.value[e].length")
             errMessageValidation.value[e] = `${e} is required`
             return
           }
           if (!article.value[e].url && e === "image") {
-            // console.log(e, article.value[e].url.length, article.value[e].url, "gambar")
             errMessageValidation.value[e] = `${e} is required`
             return
           }
           if (article.value[e]) {
-            console.log(e, article.value[e].length, article.value[e], "gambar")
             errMessageValidation.value[e] = ""
             return
           }
