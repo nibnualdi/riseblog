@@ -1,5 +1,5 @@
 <template>
-  <section class="pt-[135px] px-[146px] min-h-full flex flex-col gap-5">
+  <section class="pt-[135px] px-2 lg:px-[146px] min-h-full flex flex-col gap-5">
     <!-- <div class="mb-6">
       <input type="text" id="base-input"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
