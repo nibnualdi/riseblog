@@ -13,9 +13,9 @@
         <Spinner />
         <!-- <p>Loading the image...</p> -->
       </div>
-      <label for="upload-photo" v-if="imageData.url"
+      <label for="upload-photo" v-if="article.image.url"
         class="change-image flex flex-col justify-center items-center gap-4 hover:cursor-pointer">
-        <img :src="imageData.url" alt="image">
+        <img :src="article.image.url" alt="image">
         <div class="flex items-center">
           Click to change image
           <div class="w-7 m-auto">
@@ -28,7 +28,7 @@
         </div>
       </label>
 
-      <label for="upload-photo" v-if="!imageData.url && !loadingImage"
+      <label for="upload-photo" v-if="!article.image.url && !loadingImage"
         class="add-image flex flex-col justify-center items-center gap-4 hover:cursor-pointer">
         Click to add an image
         <div class="w-7">
@@ -41,17 +41,23 @@
 
       <input type="file" name="photo" id="upload-photo" class="opacity-0" @input="handleUploadImage" />
     </div>
+    <p class="text-xs text-red-500 ml-1 mb-[15px] transition-all duration-300 leading-[0px]"
+      :class="errMessageValidation.image ? 'opacity-100 translate-y-1/2' : 'opacity-0'">
+      {{ errMessageValidation.image }}</p>
 
     <div>
       <textarea id="message" rows="4"
         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-        placeholder="What's the article about..." v-model="desc"></textarea>
+        placeholder="What's the article about..." v-model="article.desc"></textarea>
     </div>
+    <p class="text-xs text-red-500 ml-1 mb-[15px] transition-all duration-300 leading-[0px]"
+      :class="errMessageValidation.desc ? 'opacity-100 translate-y-1/2' : 'opacity-0'">
+      {{ errMessageValidation.desc }}</p>
 
     <div class="flex flex-wrap gap-[3px] w-full ml-2">
       <span
         class="flex items-center justify-between gap-1 bg-purple-500 text-purple-100 text-sm font-medium mr-2 px-2.5 py-0.5 rounded hover:cursor-pointer"
-        @click="handleRemoveTag(tag)" v-for="tag in selectedTags">
+        @click="handleRemoveTag(tag)" v-for="tag in article.tags">
         {{ tag }}
         <div class="w-4">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
@@ -68,6 +74,9 @@
         placeholder="Add a tag..." v-model="inputTags" @input="handleSearchTags($event)" @keydown="handleInputTagsEnter">
       <label for="base-input" class="block mb-2 text-sm font-medium text-gray-400 ml-2">Enter to make a new tag...</label>
     </div>
+    <p class="text-xs text-red-500 ml-1 mb-[15px] transition-all duration-300 leading-[0px]"
+      :class="errMessageValidation.tags ? 'opacity-100 translate-y-1/2' : 'opacity-0'">
+      {{ errMessageValidation.tags }}</p>
 
     <div class="flex flex-wrap gap-[3px] w-full ml-2">
       <span
@@ -104,13 +113,14 @@ export default {
     Spinner,
   },
   setup() {
-    const title = ref("")
-    const desc = ref("")
-    const imageData = ref({
-      url: "",
-      ref: ""
+    const article = ref({
+      desc: "",
+      image: {
+        url: "",
+        ref: ""
+      },
+      tags: []
     })
-    const selectedTags = ref([])
     const inputTags = ref("")
     const tagsRef = ref([])
     const limitedTags = ref([])
@@ -121,6 +131,12 @@ export default {
     const route = useRoute()
     const store = useStore()
 
+    let errMessageValidation = ref({
+      image: "",
+      desc: "",
+      tags: ""
+    })
+
     // fill the form for edit
     onMounted(async () => {
       const idPost = route.params.id
@@ -128,10 +144,10 @@ export default {
       if (idPost) {
         const post = await axiosInstance.get(`/post/${idPost}`)
 
-        desc.value = post.data.text
-        imageData.value.url = post.data.image
-        imageData.value.ref = idPost
-        selectedTags.value = post.data.tags
+        article.value.desc = post.data.text
+        article.value.image.url = post.data.image
+        article.value.image.ref = idPost
+        article.value.tags = post.data.tags
       }
     })
 
@@ -171,21 +187,21 @@ export default {
       if (key.toLowerCase() !== "enter") return
       if (inputTags.value === "") return
 
-      selectedTags.value.push(inputTags.value)
+      article.value.tags.push(inputTags.value)
       inputTags.value = ""
     }
 
     const handlePickTagButton = (e) => {
-      selectedTags.value.push(e.target.innerText)
+      article.value.tags.push(e.target.innerText)
       inputTags.value = ""
     }
 
     const handleRemoveTag = (value) => {
-      const newTags = selectedTags.value.filter((tag) => {
+      const newTags = article.value.tags.filter((tag) => {
         return tag !== value
       })
 
-      selectedTags.value = newTags
+      article.value.tags.value = newTags
     }
 
     const handleUploadImage = async (e) => {
@@ -200,19 +216,43 @@ export default {
       if (action === "add-image") {
         const { downloadURL, ref } = await uploadFileFirebase(image)
         loadingImage.value = false
-        return imageData.value = { url: downloadURL, ref }
+        return article.value.image = { url: downloadURL, ref }
       }
       if (action === "change-image") {
-        deleteFileFireBase(imageData.value.ref)
+        deleteFileFireBase(article.value.image.ref)
 
         const { downloadURL, ref } = await uploadFileFirebase(image)
         loadingImage.value = false
-        return imageData.value = { url: downloadURL, ref }
+        return article.value.image = { url: downloadURL, ref }
       }
     }
 
+    watch(errMessageValidation, ()=>{
+      console.log(errMessageValidation, "errMessageValidation")
+    })
+
     const handleUploadButton = async () => {
-      if (!desc.value || !imageData.value.url || !selectedTags.value.length) return alert("please fill all the input")
+      if (!article.value.desc || !article.value.image.url || !article.value.tags.length) {
+        Object.keys(errMessageValidation.value).map((e) => {
+          if (!article.value[e].length && e !== "image") {
+            // console.log(e, article.value[e].length, article.value[e], "article.value[e].length")
+            errMessageValidation.value[e] = `${e} is required`
+            return
+          }
+          if (!article.value[e].url && e === "image") {
+            // console.log(e, article.value[e].url.length, article.value[e].url, "gambar")
+            errMessageValidation.value[e] = `${e} is required`
+            return
+          }
+          if (article.value[e]) {
+            console.log(e, article.value[e].length, article.value[e], "gambar")
+            errMessageValidation.value[e] = ""
+            return
+          }
+          return
+        })
+        return
+      }
 
       loadingUpload.value = true
       const userId = JSON.parse(Cookies.get("user")).id
@@ -221,9 +261,9 @@ export default {
       if (idPost) {
         try {
           await axiosInstance.put(`/post/${idPost}`, {
-            text: desc.value,
-            image: imageData.value.url,
-            tags: selectedTags.value,
+            text: article.value.desc,
+            image: article.value.image.url,
+            tags: article.value.tags,
             owner: userId
           })
 
@@ -240,9 +280,9 @@ export default {
 
       try {
         await axiosInstance.post("/post/create", {
-          text: desc.value,
-          image: imageData.value.url,
-          tags: selectedTags.value,
+          text: article.value.desc,
+          image: article.value.image.url,
+          tags: article.value.tags,
           owner: userId
         })
 
@@ -257,8 +297,8 @@ export default {
     }
 
     const handleCancelButton = () => {
-      if (imageData.value.ref) {
-        deleteFileFireBase(imageData.value.ref)
+      if (article.value.image.ref) {
+        deleteFileFireBase(article.value.image.ref)
         router.push("/my-articles")
         return
       }
@@ -266,7 +306,7 @@ export default {
       router.push("/my-articles")
     }
 
-    return { inputTags, selectedTags, tagsRef, limitedTags, handleSearchTags, handlePickTagButton, handleRemoveTag, title, desc, imageData, handleUploadImage, loadingImage, handleInputTagsEnter, handleUploadButton, loadingUpload, handleCancelButton }
+    return { inputTags, tagsRef, limitedTags, handleSearchTags, handlePickTagButton, handleRemoveTag, article, handleUploadImage, loadingImage, handleInputTagsEnter, handleUploadButton, loadingUpload, handleCancelButton, errMessageValidation }
   }
 }
 </script>
