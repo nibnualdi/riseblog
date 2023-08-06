@@ -1,6 +1,6 @@
 <template>
   <header
-    class="flex justify-between items-center flex-col gap-5 lg:gap-0 lg:flex-row px-[146px] pt-[24px] pb-[17px] text-[13px] font-medium bg-[#EFEFEF] bg-opacity-[80%] w-[100%] fixed z-10"
+    class="flex justify-between items-center flex-col gap-5 lg:gap-0 lg:flex-row px-[146px] pt-[24px] pb-[17px] text-[13px] font-medium bg-[#EFEFEF] bg-opacity-[80%] w-[100%] fixed z-50"
     :ref_key="keyTrigger">
     <div>
       <img src="@/assets/logo.png" alt="logo">
@@ -33,7 +33,7 @@
 
         <!-- Dropdown menu -->
         <div id="userDropdown"
-          class="z-10divide-y rounded-lg shadow w-44 bg-gray-700 divide-gray-600 absolute transition-all ease-in-out duration-300 hidden opacity-0"
+          class="z-40 divide-y rounded-lg shadow w-44 bg-gray-700 divide-gray-600 absolute transition-all ease-in-out duration-300 hidden opacity-0"
           >
           <div class="px-4 py-3 text-sm text-white">
             <div>{{ `${user.firstName} ${user.lastName}` }}</div>

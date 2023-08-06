@@ -1,7 +1,7 @@
 <template>
   <section class="flex justify-center items-center h-[813px]">
-    <div class="w-[977px] h-[519px] bg-[#FFFFFF] rounded-[40px] flex items-center gap-[29px] overflow-hidden">
-      <div class="relative w-[400px] h-full">
+    <div class="relative max-w-[977px] h-[519px] bg-[#FFFFFF] rounded-[40px] flex items-center gap-1 lg:gap-[29px] overflow-hidden">
+      <div class="absolute lg:relative z-0 w-[400px] h-full opacity-50 lg:opacity-100">
         <Oval bgGradient="true" widthAndHeight="w-[42.94px] h-[160.14px]" position="top-[-59px] left-[150px]"
           rotate="rotate-[-64.07deg]" />
         <Oval bgGradient="true" widthAndHeight="w-[38px] h-[93px]" position="top-[383px] left-[124px]"
@@ -16,7 +16,7 @@
         <Circle borderGradient="true" widthAndHeight="w-[174.05px] h-[160.82px]" position="top-[390px] left-[-76px]"
           borderWidth="p-[35px]" />
       </div>
-      <div class="w-full p-[200px] flex flex-col">
+      <div class="z-10 w-full p-10 lg:p-[200px] flex flex-col">
         <h1 class="text-[48px] font-bold text-[#2B2C34]">{{ name }}</h1>
         <!-- signup inputs -->
         <input v-if="name === 'Sign Up'" v-model="user.firstName"
