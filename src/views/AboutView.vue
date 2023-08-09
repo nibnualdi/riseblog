@@ -29,6 +29,19 @@
   </section>
 </template>
 
+<script>
+import { useHead } from 'unhead'
+
+export default {
+  name: "AboutView",
+  setup() {
+    useHead({
+      title: 'Riseblog | about'
+    })
+  }
+}
+</script>
+
 <style scoped>
 a {
   color: #3652E1;

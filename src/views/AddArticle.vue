@@ -4,6 +4,7 @@
 
 <script>
 import FormArticle from '@/components/FormArticle.vue';
+import { useHead } from 'unhead'
 
 export default {
   name: "AddArticle",
@@ -11,7 +12,9 @@ export default {
     FormArticle
   },
   setup() {
-
+    useHead({
+      title: 'Riseblog | create'
+    })
   }
 }
 </script>

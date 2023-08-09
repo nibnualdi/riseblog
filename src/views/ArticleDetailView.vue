@@ -41,6 +41,7 @@ import Spinner from "@/components/Loading/Spinner.vue"
 import { computed, onMounted, watch } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
+import { useHead } from 'unhead'
 
 export default {
   name: "ArticleLeftCards",
@@ -61,6 +62,10 @@ export default {
     
     const isLoadingPost = computed(() => store.state.post.isLoading)
     const isLoadingSinglePost = computed(() => store.state.post.isLoading)
+
+    useHead({
+      title: `Riseblog | ${titleComputed}`
+    })
 
     onMounted(() => {
       !posts.value.length && store.dispatch("getAllPost")

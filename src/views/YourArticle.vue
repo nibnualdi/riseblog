@@ -98,6 +98,7 @@ import { computed, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import Cookies from 'js-cookie';
 import { useRouter } from 'vue-router';
+import { useHead } from 'unhead'
 
 import Spinner from '@/components/Loading/Spinner.vue';
 
@@ -115,6 +116,10 @@ export default {
     const userPostsIsLoading = computed(() => store.state.postByUser.isLoading)
 
     const selectedPost = ref({})
+
+    useHead({
+      title: 'Riseblog | your articles'
+    })
 
     onMounted(() => {
       const userData = JSON.parse(Cookies.get("user"))
