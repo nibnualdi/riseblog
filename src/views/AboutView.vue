@@ -11,7 +11,21 @@
           href="https://www.figma.com/community/file/1230503106556871788/Blog-Website-Design">here's</a> if you want to
         see the design. Also it is developed by <a href="https://github.com/nibnualdi">Ibnu</a>, by using the vue.js, <a
           href="https://github.com/nibnualdi/blog">here's</a> if you want to see the code more...</p>
+
+      <div class="w-full flex flex-col text-center text-base mt-5 gap-10 lg:text-start lg:flex-row lg:text-lg lg:mt-20">
+        <div>
+          <p>fadhilfaqih7@gmail.com</p>
+          <p>-Fadhil</p>
+        </div>
+        <div>
+          <p>nibnualdi@gmail.com</p>
+          <p>-Ibnu</p>
+        </div>
+      </div>
+
     </div>
+
+
   </section>
 </template>
 
