@@ -3,7 +3,7 @@
     class="fixed top-0 left-0 right-0 z-50 p-4 overflow-x-hidden overflow-y-auto lg:inset-0 h-[calc(100%-1rem)] max-h-full"
     v-if="isModalSignupOpen">
     <div class="relative w-full h-full">
-      <div class="absolute transition-all w-[448px] h-[350px] bg-[#EFEFEF] rounded-lg shadow" :style="position">
+      <div class="absolute transition-all w-[350px] h-fit lg:w-[550px] bg-[#EFEFEF] rounded-lg shadow" :style="position">
         <!-- <button type="button"
           class="absolute top-3 right-2.5 text-gray-400 bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center hover:bg-gray-800 hover:text-white"
           data-modal-hide="popup-modal">
@@ -33,14 +33,14 @@
           <button data-modal-hide="popup-modal" type="button"
             class="rounded-lg border text-sm font-medium px-5 py-2.5 focus:z-10 bg-gray-700 text-gray-300 border-gray-500 hover:text-white hover:bg-gray-600 focus:ring-gray-600"
             @click="handleClose">Yeah,
-            It's fine</button>
+            It's fine. Click to copy id</button>
         </div>
       </div>
     </div>
   </div>
 
 
-  <div class="absolute transition-all w-[448px] bg-[#EFEFEF] rounded-lg shadow"
+  <div class="absolute transition-all w-[350px] lg:w-[448px] bg-[#EFEFEF] rounded-lg shadow z-50"
     style="top: 50%; left: 50%; transform: translate(-50%, -50%);" v-if="isUnforgivableButton">
     <div class="p-6 text-center">
       <svg aria-hidden="true" class="mx-auto mb-4 text-red-400 w-14 h-14" fill="none" stroke="currentColor"
