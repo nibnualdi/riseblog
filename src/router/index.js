@@ -10,6 +10,10 @@ import ContactView from '../views/ContactView.vue'
 import YourArticle from '../views/YourArticle.vue'
 import AddArticle from '../views/AddArticle.vue'
 import EditArticle from '../views/EditArticle.vue'
+import Cookies from 'js-cookie'
+import { ref } from 'vue'
+
+const isAuth = ref(Cookies.get("user"))
 
 const routes = [
   {
@@ -31,6 +35,9 @@ const routes = [
     path: '/articles/create',
     name: 'CreateArticle',
     component: CreateArticle,
+    meta: {
+      auth: true
+    }
   },
   {
     path: '/about',
@@ -64,17 +71,26 @@ const routes = [
   {
     path: '/my-articles',
     name: 'YourArticle',
-    component: YourArticle
+    component: YourArticle,
+    meta: {
+      auth: true
+    }
   },
   {
     path: '/add-article',
     name: 'AddArticle',
-    component: AddArticle
+    component: AddArticle,
+    meta: {
+      auth: true
+    }
   },
   {
     path: '/edit-article/:id',
     name: 'EditArticle',
-    component: EditArticle
+    component: EditArticle,
+    meta: {
+      auth: true
+    }
   },
 ]
 
@@ -83,8 +99,12 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach((to, from) => {
+router.beforeEach((to, from, next) => {
   window.scrollTo(0, 0)
+
+  if(!to.meta.auth) return next()
+  if(!isAuth.value) return next('/auth/login')
+  next()
 })
 
 export default router

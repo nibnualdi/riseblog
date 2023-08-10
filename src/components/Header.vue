@@ -139,6 +139,8 @@ export default {
       Cookies.remove("user")
       dropdownIsOpen.value = false
       handleKeyTrigger()
+      
+      if(route.meta.auth) return window.location.href = "/"
     }
 
     const handleToLogin = (page) => {

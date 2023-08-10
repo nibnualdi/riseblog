@@ -141,7 +141,8 @@ export default {
         })
 
         if (selectedUser.length) {
-          router.push("/")
+          // router.push("/")
+          window.location.href = "/"
           Cookies.set('user', JSON.stringify(selectedUser[0]), { expires: 7 })
         }
       }
