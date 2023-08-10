@@ -122,7 +122,7 @@ export default {
     })
 
     onMounted(() => {
-      const userData = JSON.parse(Cookies.get("user"))
+      const userData = Cookies.get("user") ? JSON.parse(Cookies.get("user")) : ""
       store.commit("clearPostByUser")
       store.dispatch("getPostByUser", userData.id)
 
