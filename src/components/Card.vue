@@ -113,7 +113,7 @@ export default {
     })
 
     const handleButtonLinkReadMore = () => {
-      store.dispatch("getASinglePost", idPost)
+      // store.dispatch("getASinglePost", idPost)
       router.push(`/articles/${idPost}`)
     }
     

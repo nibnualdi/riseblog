@@ -24,8 +24,8 @@
         <div class="flex w-full justify-between">
           <div class="flex items-center gap-2 max-w-[294px]">
             <div>
-              <img :src="singlePost.owner.picture" alt="owner" width="30" height="30" class="border-[3px] border-[#3652E1] rounded-full" v-if="singlePost.owner.picture">
-              <div v-if="!singlePost.owner.picture" class="w-[30px] h-[30px] flex justify-center items-center text-[12px] border-[3px] border-[#3652E1] rounded-full">
+              <img :src="singlePost.owner?.picture" alt="owner" width="30" height="30" class="border-[3px] border-[#3652E1] rounded-full" v-if="singlePost.owner?.picture">
+              <div v-if="!singlePost.owner?.picture" class="w-[30px] h-[30px] flex justify-center items-center text-[12px] border-[3px] border-[#3652E1] rounded-full">
                 <p>{{ `${singlePost.owner?.firstName[0]}${singlePost.owner?.lastName[0]}` }}</p>
               </div>
             </div>
@@ -58,10 +58,11 @@ import Card from "@/components/Card.vue"
 import Ovals2 from "@/components/Ovals/Ovals2.vue"
 import Skeleton from "@/components/Loading/Skeleton.vue"
 import Spinner from "@/components/Loading/Spinner.vue"
-import { computed, onMounted, watch } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { useHead } from 'unhead'
+import { axiosInstance } from "@/axios";
 
 export default {
   name: "ArticleLeftCards",
@@ -75,13 +76,13 @@ export default {
     const route = useRoute()
     const store = useStore()
 
-    const singlePost = computed(() => store.state.singlePost.post)
+    const singlePost = ref({})
     const titleComputed = computed(() => singlePost.value?.text?.substring(0, 20))
 
     const posts = computed(() => store.state.post.posts.slice(0, 3))
     
     const isLoadingPost = computed(() => store.state.post.isLoading)
-    const isLoadingSinglePost = computed(() => store.state.post.isLoading)
+    const isLoadingSinglePost = ref(false)
 
     useHead({
       title: `Riseblog | ${titleComputed}`
@@ -89,6 +90,19 @@ export default {
 
     onMounted(() => {
       !posts.value.length && store.dispatch("getAllPost")
+
+    })
+    
+    onMounted(async()=>{
+      isLoadingSinglePost.value = true
+      
+      try {
+        const post = await axiosInstance.get(`/post/${route.params.id}`)
+        singlePost.value = post.data
+        isLoadingSinglePost.value = false
+      } catch {
+        isLoadingSinglePost.value = false
+      }
     })
 
     return { singlePost, titleComputed, posts, isLoadingPost, isLoadingSinglePost }

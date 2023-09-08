@@ -14,10 +14,10 @@ export default createStore({
     totalPost: 0,
     tag: ["all", "technology", "environment", "business", "politics"],
     selectedTag: "all",
-    singlePost: {
-      post: null,
-      isLoading: false
-    },
+    // singlePost: {
+    //   post: null,
+    //   isLoading: false
+    // },
     postByUser: {
       post: [],
       isLoading: false
@@ -58,12 +58,12 @@ export default createStore({
     updateTotalPost(state, payload) {
       state.totalPost = payload
     },
-    updateSinglePost(state, payload) {
-      state.singlePost.post = payload
-    },
-    updateIsLoadingSinglePost(state, payload) {
-      state.singlePost.isLoading = payload
-    },
+    // updateSinglePost(state, payload) {
+    //   state.singlePost.post = payload
+    // },
+    // updateIsLoadingSinglePost(state, payload) {
+    //   state.singlePost.isLoading = payload
+    // },
     updateSelectedTag(state, payload) {
       state.selectedTag = payload
       console.log("selectedTag is updated : ", state.selectedTag)
@@ -174,21 +174,21 @@ export default createStore({
         console.log("sortedPostByLikes is updated : ", context.state.sortedPostByLikes)
       }
     },
-    async getASinglePost(context, payload) {
-      context.commit("updateIsLoadingSinglePost", true)
-      console.log("single post is updated : ", context.state.singlePost.isLoading)
+    // async getASinglePost(context, payload) {
+    //   context.commit("updateIsLoadingSinglePost", true)
+    //   console.log("single post is updated : ", context.state.singlePost.isLoading)
       
-      try {
-        const post = await axiosInstance.get(`/post/${payload}`)
-        context.commit("updateSinglePost", post.data)
-        context.commit("updateIsLoadingSinglePost", false)
-        console.log("single post is updated : ", context.state.singlePost)
-      } catch {
-        context.commit("updateIsLoadingSinglePost", false)
-        console.log("single post is updated : ", context.state.singlePost)
-      }
+    //   try {
+    //     const post = await axiosInstance.get(`/post/${payload}`)
+    //     context.commit("updateSinglePost", post.data)
+    //     context.commit("updateIsLoadingSinglePost", false)
+    //     console.log("single post is updated : ", context.state.singlePost)
+    //   } catch {
+    //     context.commit("updateIsLoadingSinglePost", false)
+    //     console.log("single post is updated : ", context.state.singlePost)
+    //   }
 
-    },
+    // },
     async getPostByUser(context, payload) {
       context.commit("updateIsLoadingPostByUser", true)
       console.log("postByUser is updated : ", context.state.postByUser.isLoading)

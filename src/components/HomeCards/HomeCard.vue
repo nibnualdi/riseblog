@@ -43,7 +43,7 @@ export default {
     const titleComputed = computed(()=> props.title.substring(0, 20))
 
     const handleButtonLinkReadMore = () => {
-      store.dispatch("getASinglePost", props.idPost)
+      // store.dispatch("getASinglePost", props.idPost)
       router.push(`/articles/${props.idPost}`)
     }
 
