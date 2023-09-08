@@ -43,6 +43,7 @@
         </div>
         <h1 class="text-[33px] text-[#1C1C1C] font-bold leading-[39.94px] mb-[36px]">{{ titleComputed }}</h1>
         <div>
+          <p class="text-[15px] text-[#8E8E8E] leading-[18.15px] capitalize mb-3">PUBLISHED {{ new Date(singlePost?.publishDate) }}</p>
           <img :src="singlePost?.image" alt="article">
           <!-- <p class="text-[15px] text-[#8E8E8E] leading-[18.15px]">Neuralink logo displayed on a phone screen, a silhouette of a paper in shape of a human face and a binary code displayed on a screen are seen in this multiple exposure illustration photo taken in Krakow, Poland on December 10, 2021.</p> -->
         </div>
@@ -90,7 +91,6 @@ export default {
 
     onMounted(() => {
       !posts.value.length && store.dispatch("getAllPost")
-
     })
     
     onMounted(async()=>{
@@ -99,6 +99,7 @@ export default {
       try {
         const post = await axiosInstance.get(`/post/${route.params.id}`)
         singlePost.value = post.data
+        console.log("singgle post : ", post.data)
         isLoadingSinglePost.value = false
       } catch {
         isLoadingSinglePost.value = false
