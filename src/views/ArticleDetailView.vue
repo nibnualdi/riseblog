@@ -21,6 +21,26 @@
 
       <Spinner v-if="isLoadingSinglePost" class="w-full max-w-[802px]" />
       <div v-if="!isLoadingSinglePost" class="flex flex-col items-center max-w-[802px]">
+        <div class="flex w-full justify-between">
+          <div class="flex items-center gap-2 max-w-[294px]">
+            <div>
+              <img :src="singlePost.owner.picture" alt="owner" width="30" height="30" class="border-[3px] border-[#3652E1] rounded-full" v-if="singlePost.owner.picture">
+              <div v-if="!singlePost.owner.picture" class="w-[30px] h-[30px] flex justify-center items-center text-[12px] border-[3px] border-[#3652E1] rounded-full">
+                <p>{{ `${singlePost.owner?.firstName[0]}${singlePost.owner?.lastName[0]}` }}</p>
+              </div>
+            </div>
+            <p class="text-[#1C1C1C] text-[19px]">{{ `${singlePost.owner?.firstName} ${singlePost.owner?.lastName}` }}</p>
+          </div>
+
+          <!-- like feature -->
+          <!-- not created yet, the api still not ready yet (the same account still can like a post more than once) -->
+          <!-- <div class="flex gap-1 text-[#1C1C1C] cursor-pointer opacity-60">
+            <p>Like</p>
+            <img src="@/assets/icons/heart.svg" alt="heart" width="13" height="13">
+          </div> -->
+          <!-- like feature -->
+
+        </div>
         <h1 class="text-[33px] text-[#1C1C1C] font-bold leading-[39.94px] mb-[36px]">{{ titleComputed }}</h1>
         <div>
           <img :src="singlePost?.image" alt="article">
