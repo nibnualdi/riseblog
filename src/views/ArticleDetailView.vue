@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section class="p-[146px] flex justify-center gap-[75px]">
+    <section class="pt-[146px] px-4 lg:p-[146px] flex justify-center gap-[75px]">
       <div class="hidden lg:block">
         <h1
           class="bg-clip-text text-transparent bg-gradient-to-r from-[#3652E1] to-[#8057F5] text-[33px] font-bold mb-[5px]">
