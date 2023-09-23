@@ -7,6 +7,8 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@capacitor/android": "^5.4.1",
+    "@capacitor/core": "^5.4.1",
     "@vueuse/head": "^1.1.26",
     "autoprefixer": "^10",
     "axios": "^1.4.0",
@@ -20,6 +22,8 @@
     "vuex": "^4.0.0"
   },
   "devDependencies": {
+    "@capacitor/assets": "^3.0.0",
+    "@capacitor/cli": "^5.4.1",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-router": "~5.0.0",
     "@vue/cli-plugin-vuex": "~5.0.0",
