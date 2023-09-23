@@ -1,19 +1,13 @@
-# blog-with-vue
+# RISEBLOG
 
-## Project setup
-```
-npm install
-```
+It is a blog with the Vue JS and capasitor (android). It is using the dummyapi.io a dummy API public. Thanks to Fadh for the UI/UX, here is the [design](https://www.figma.com/community/file/1230503106556871788).
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+Access the Website [riseblog.vercel.app](riseblog.vercel.app) and Get the apk [here](./android/app/release/app-release.apk) or access the android/app/release folder and download the app-release.apk
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## Project Screenshots
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+**Website** 
+![Website](./public/screenshots/website.png) 
+
+**Mobile** 
+![Mobile](./public/screenshots/mobile.png)
